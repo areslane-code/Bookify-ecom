@@ -29,13 +29,23 @@ class ReviewResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
+                Forms\Components\Select::make('lastname')
+                    ->relationship("user", "lastname")
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('book_id')
+                    ->label("Nom")
+                    ->disabled(),
+                Forms\Components\Select::make('firstname')
+                    ->relationship("user", "firstname")
                     ->required()
-                    ->numeric(),
+                    ->label("Prénom")
+                    ->disabled(),
+                Forms\Components\Select::make('Livre')
+                    ->relationship("book", "title")
+                    ->label("Titre")
+                    ->required()
+                    ->disabled(),
                 Forms\Components\Textarea::make('content')
+                    ->label("Contenu")
                     ->required()
                     ->columnSpanFull(),
             ]);
@@ -45,23 +55,31 @@ class ReviewResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('book_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('user.firstname')
+                    ->label("Utilisateur"),
+                Tables\Columns\TextColumn::make('book.title')
+                    ->label("Titre")
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('content')
+                    ->label("Contenu")
+                    ->limit(30),
             ])
             ->filters([
                 //
             ])
+            ->searchPlaceholder("Rechercher")
+
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->label("")
+                    ->color("primary"),
+                Tables\Actions\DeleteAction::make()
+                    ->label("")
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([]),
-            ]);
+            ])
+            ->paginated(false);
     }
 
     public static function getRelations(): array
@@ -75,9 +93,7 @@ class ReviewResource extends Resource
     {
         return [
             'index' => Pages\ListReviews::route('/'),
-            'create' => Pages\CreateReview::route('/create'),
             'view' => Pages\ViewReview::route('/{record}'),
-            'edit' => Pages\EditReview::route('/{record}/edit'),
         ];
     }
 

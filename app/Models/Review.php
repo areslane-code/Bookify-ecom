@@ -19,6 +19,6 @@ class Review extends Model
 
     public function user()
     {
-        return $this->belongsTo(Book::class)->where("role", "0");
+        return $this->belongsTo(User::class)->where("role", "0");
     }
 }
