@@ -15,12 +15,11 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use App\Filament\Resources\BookResource\RelationManagers;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class BookResource extends Resource
 {
     protected static ?string $model = Book::class;
-
-
 
     protected static ?string $navigationLabel = "Livres";
 
@@ -38,7 +37,14 @@ class BookResource extends Resource
                     ->image()
                     ->disk('local')
                     ->visibility('public')
-                    ->directory("images/")
+                    ->directory("images")
+                    ->preserveFilenames()
+                    ->getUploadedFileNameForStorageUsing(
+                        fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
+                            ->prepend(now()->timestamp),
+                    )
+
+
                     ->required(),
                 Forms\Components\TextInput::make('title')
                     ->required()
