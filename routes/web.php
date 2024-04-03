@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,16 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [BookController::class, "index"]);
 
-Route::get('/users', function () {
-    return view("users", [
-        "users" => User::all()
-    ]);
-});
+Route::get('/book', [BookController::class, "search"]);
 
-Route::post('/user/show', [UserController::class, "show"])->name("user.show");
+Route::get('/book/{id}', [BookController::class, "show"]);
+
 
 Route::get('/signup', [UserController::class, "create"]);
