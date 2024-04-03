@@ -34,11 +34,11 @@ class UserSeeder extends Seeder
             $randomTimestamp = mt_rand($start, $end);
             $randomStamp = date('Y-m-d H:i:s', $randomTimestamp);
             DB::table('users')->insert([
-                'lastname' => 'User ' . ($i + 1),
-                'firstname' => 'firstUser ' . ($i + 1),
+                'lastname' => 'lastname',
+                'firstname' => 'firstname',
                 'email' => 'user' . ($i + 1) . '@example.com',
                 'password' => Hash::make('password'),
-                'role' => rand(0, 2),
+                'role' => 0,
                 'phoneNumber' => 02342323,
                 "created_at" =>   $randomStamp, // You can use Hash facade to hash passwords
             ]);

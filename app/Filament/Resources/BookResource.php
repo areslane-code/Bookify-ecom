@@ -37,7 +37,7 @@ class BookResource extends Resource
                     ->image()
                     ->disk('local')
                     ->visibility('public')
-                    ->directory("images")
+                    ->directory("public")
                     ->preserveFilenames()
                     ->getUploadedFileNameForStorageUsing(
                         fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
