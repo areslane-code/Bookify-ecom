@@ -4,7 +4,7 @@
     <nav class="relative max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8"
         aria-label="Global">
         <div class="flex items-center justify-between">
-            <a class="flex-none text-xl font-bold text-white lg:text-3xl" href="#" aria-label="Brand">Bookify</a>
+            <a class="flex-none text-xl font-bold text-white lg:text-3xl" href="/" aria-label="Brand">Bookify</a>
 
             <div class="flex items-center justify-center sm:hidden gap-x-4">
                 <a class=" material-symbols-outlined text-md text-white/[.8] ahover:text-white "
@@ -40,16 +40,32 @@
                 <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="#">Commandes</a>
                 <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="#">Avis</a>
                 <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="#">Compte</a>
-                <a class="flex items-center gap-x-2 font-medium text-white/[.8] hover:text-white sm:border-s sm:border-white/[.3] sm:my-6 sm:ps-6"
-                    href="#">
-                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                        <circle cx="12" cy="7" r="4" />
-                    </svg>
-                    se connecter
-                </a>
+                @auth
+                    <form action="/logout" action="POST">
+                        <button type="submit"
+                            class="flex items-center gap-x-2 font-medium text-white/[.8] hover:text-white sm:border-s sm:border-white/[.3] sm:my-6 sm:ps-6"
+                            href="/login">
+                            <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            se deconnecter
+                        </button>
+                    </form>
+                @else
+                    <a class="flex items-center gap-x-2 font-medium text-white/[.8] hover:text-white sm:border-s sm:border-white/[.3] sm:my-6 sm:ps-6"
+                        href="/login">
+                        <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        se connecter
+                    </a>
+                @endauth
             </div>
         </div>
         <!--Small devices-->
@@ -62,9 +78,9 @@
                 <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="#">Avis</a>
                 <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="#">Compte</a>
                 <a class="flex items-center gap-x-2 font-medium text-white/[.8] hover:text-white sm:border-s sm:border-white/[.3] sm:my-6 sm:ps-6"
-                    href="#">
-                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    href="/login">
+                    <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                         <circle cx="12" cy="7" r="4" />

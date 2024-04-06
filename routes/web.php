@@ -17,11 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Home page route
 Route::get('/', [BookController::class, "index"]);
 
+// Book routing
 Route::get('/book', [BookController::class, "search"]);
 
 Route::get('/book/{id}', [BookController::class, "show"]);
 
 
-Route::get('/signup', [UserController::class, "create"]);
+// User routing
+Route::get('/signup', [UserController::class, "create"])->middleware("guest");
+
+Route::get('/login', [UserController::class, "loginShow"])->middleware("guest");
+
+Route::post('/login', [UserController::class, "login"])->middleware("guest");
+
+Route::get('/logout', [UserController::class, "logout"])->middleware("auth");
