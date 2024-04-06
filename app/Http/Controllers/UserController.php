@@ -5,14 +5,44 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
 
     public function create(Request $request)
     {
-
         return view("users.create", []);
+    }
+
+    public function store(Request $request)
+    {
+
+
+        $data = $request->validate([
+            'nom' => ['required'],
+            'prenom' => ['required', ""],
+            'telephone' => ['required'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:8'],
+        ]);
+
+
+
+
+        $user = new User();
+
+        $user->lastname = $data["nom"];
+        $user->firstname = $data["prenom"];
+        $user->phoneNumber = $data["telephone"];
+        $user->email = $data["email"];
+        $user->password = Hash::make($data["password"]);
+        $user->role = 0;
+
+
+        $user->save();
+
+        return redirect("/login");
     }
 
     public function loginShow(Request $request)
@@ -25,6 +55,12 @@ class UserController extends Controller
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required', "min:8"],
+            [
+                'email.required' => 'Le champ email est requis.',
+                'email.email' => 'Veuillez saisir une adresse email valide.',
+                'password.required' => 'Le champ mot de passe est requis.',
+                'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+            ]
         ]);
 
         // Check if the user exists and has the role of
@@ -37,8 +73,10 @@ class UserController extends Controller
             } else {
                 // Deny login
                 Auth::logout();
-                return redirect()->back()->withErrors(['role' => 'Vous ne pouvez pas vous connecter avec un compte admin/libraire ici']);
+                return redirect()->back()->withErrors(['general' => 'Vous ne pouvez pas vous connecter avec un compte admin/libraire ici']);
             }
+        } else {
+            return redirect()->back()->withErrors(['general' => 'Email ou mot de passe est incorrect']);
         }
     }
 

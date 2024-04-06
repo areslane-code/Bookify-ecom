@@ -8,7 +8,7 @@
                       <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Se connecter</h1>
                       <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                           Vous n'avez pas un compte?
-                          <a class="font-medium text-blue-600 decoration-2 hover:underline" href="/singup">
+                          <a class="font-medium text-blue-600 decoration-2 hover:underline" href="/signup">
                               créer le ici
                           </a>
                       </p>
@@ -16,7 +16,7 @@
 
                   <div class="mt-5">
                       <!-- Form -->
-                      <form action="/login" method="POST">
+                      <form action="/login-check" method="POST">
                           @csrf
                           <div class="grid gap-y-4">
                               <!-- Form Group -->
@@ -66,9 +66,9 @@
                                   class="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                   Se connecter</button>
                           </div>
-                          @if ($errors->has('role'))
+                          @if ($errors->has('general'))
                               <p class="mt-4 text-sm text-center text-red-600">
-                                  {{ $errors->first('role') }}
+                                  {{ $errors->first('general') }}
                               </p>
                           @endif
                       </form>

@@ -27,14 +27,16 @@
             </div>
             <!-- End Announcement Banner -->
 
-            <!-- Buttons -->
-            <div class="flex justify-center gap-3 mt-4">
-                <a class="inline-flex items-center justify-center px-4 py-3 text-sm font-medium text-center text-white border border-transparent rounded-full gap-x-3 bg-gradient-to-tl from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800"
-                    href="#">
-                    Rejoignez Nous
-                </a>
-            </div>
-            <!-- End Buttons -->
+            @guest
+                <!-- Buttons -->
+                <div class="flex justify-center gap-3 mt-4">
+                    <a class="inline-flex items-center justify-center px-4 py-3 text-sm font-medium text-center text-white border border-transparent rounded-full gap-x-3 bg-gradient-to-tl from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800"
+                        href="/signup">
+                        Rejoignez Nous
+                    </a>
+                </div>
+                <!-- End Buttons -->
+            @endguest
         </div>
     </div>
     <!-- End Hero -->

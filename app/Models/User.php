@@ -65,7 +65,6 @@ class User extends Authenticatable implements HasName, FilamentUser
         "role",
         'email',
         "phoneNumber",
-        'password',
         "created_at"
     ];
 

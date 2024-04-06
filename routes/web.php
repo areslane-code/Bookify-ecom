@@ -29,8 +29,10 @@ Route::get('/book/{id}', [BookController::class, "show"]);
 // User routing
 Route::get('/signup', [UserController::class, "create"])->middleware("guest");
 
+Route::post('/signup-check', [UserController::class, "store"])->middleware("guest");
+
 Route::get('/login', [UserController::class, "loginShow"])->middleware("guest");
 
-Route::post('/login', [UserController::class, "login"])->middleware("guest");
+Route::post('/login-check', [UserController::class, "login"])->middleware("guest");
 
 Route::get('/logout', [UserController::class, "logout"])->middleware("auth");
