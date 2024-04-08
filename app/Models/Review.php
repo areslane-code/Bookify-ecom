@@ -12,7 +12,7 @@ class Review extends Model
 
     protected $fillable = ["content"];
 
-    public function Book()
+    public function book()
     {
         return $this->belongsTo(Book::class);
     }

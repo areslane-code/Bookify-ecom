@@ -7,9 +7,6 @@
         </span>
         <p class="mb-6 leading-relaxed text-white">{{ $review->content }}</p>
         <div class="flex items-center text-white gap-x-2">
-            <span class="material-symbols-outlined">
-                account_circle
-            </span>
             @isset($review->user->lastname)
                 <a>
                     <span class="text-sm font-medium title-font font-bitter">{{ $review->user->lastname }}</span>

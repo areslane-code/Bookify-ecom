@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -36,3 +37,13 @@ Route::get('/login', [UserController::class, "loginShow"])->middleware("guest");
 Route::post('/login-check', [UserController::class, "login"])->middleware("guest");
 
 Route::get('/logout', [UserController::class, "logout"])->middleware("auth");
+
+// Review Routing
+
+Route::get('/reviews', [ReviewController::class, "index"])->middleware("auth");
+
+Route::post('/book/{book_id}/create-review', [ReviewController::class, "create"])->middleware("auth");
+
+Route::post('/reviews/{id}/update', [ReviewController::class, "update"])->middleware("auth");
+
+Route::post('/reviews/{id}/delete', [ReviewController::class, "delete"])->middleware("auth");
