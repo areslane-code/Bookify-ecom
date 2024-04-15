@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -46,4 +47,8 @@ Route::post('/book/{book_id}/create-review', [ReviewController::class, "create"]
 
 Route::post('/reviews/{id}/update', [ReviewController::class, "update"])->middleware("auth");
 
-Route::post('/reviews/{id}/delete', [ReviewController::class, "delete"])->middleware("auth");
+Route::delete('/reviews/{id}/delete', [ReviewController::class, "delete"])->middleware("auth");
+
+// Order Routing
+
+Route::get('/orders', [OrderController::class, "index"])->middleware("auth");

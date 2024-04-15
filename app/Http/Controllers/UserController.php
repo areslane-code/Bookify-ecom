@@ -70,10 +70,12 @@ class UserController extends Controller
             if (Auth::user()->role === 0) {
                 // Allow login
                 return redirect("/");
-            } else {
+            } else if (Auth::user()->role === 1 || Auth::user()->role === 2) {
                 // Deny login
                 Auth::logout();
                 return redirect()->back()->withErrors(['general' => 'Vous ne pouvez pas vous connecter avec un compte admin/libraire ici']);
+                // this is if i want to allow login and redirect direclty to the pannel
+                // return redirect("/panel");
             }
         } else {
             return redirect()->back()->withErrors(['general' => 'Email ou mot de passe est incorrect']);

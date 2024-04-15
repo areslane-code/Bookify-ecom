@@ -25,6 +25,12 @@ class CouponResource extends Resource
 
     protected static ?int $navigationSort = 5;
 
+    public static function canAccess(): bool
+    {
+        // authorize only admin
+        return auth()->user()->role === 2;
+    }
+
     public static function form(Form $form): Form
     {
         return $form

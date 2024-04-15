@@ -40,11 +40,8 @@ class BookResource extends Resource
                     ->directory("public")
                     ->preserveFilenames()
                     ->getUploadedFileNameForStorageUsing(
-                        fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
-                            ->prepend(now()->timestamp),
+                        fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName()),
                     )
-
-
                     ->required(),
                 Forms\Components\TextInput::make('title')
                     ->required()

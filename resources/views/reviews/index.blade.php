@@ -25,10 +25,13 @@
                         </form>
                     </div>
                     <!--edit and delete buttons-->
-                    <a href="/reviews/{{ $review->id }}/delete"
-                        class="absolute text-red-600 top-10 right-3 material-symbols-outlined">
-                        delete
-                    </a>
+                    <form action="/reviews/{{ $review->id }}/delete" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="absolute text-red-600 top-10 right-3 material-symbols-outlined">
+                            delete
+                        </button>
+                    </form>
                     <button @click=" isVisible = !isVisible" x-show="!isVisible"
                         class="absolute text-blue-600 right-3 top-20 md:top-10 md:right-12 material-symbols-outlined">
                         edit

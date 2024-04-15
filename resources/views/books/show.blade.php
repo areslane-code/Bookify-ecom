@@ -61,21 +61,23 @@
           </section>
 
           @auth
-              <section class="max-w-3xl mx-auto mt-20">
-                  <form action="/book/{{ $book->id }}/create-review" method="POST">
-                      @csrf
-                      <label for="review_content" class="block mb-2 text-xl font-semibold text-start">Publier votre
-                          avis</label>
-                      <textarea name="review_content" id="review_content"
-                          class="block w-full px-4 py-3 mt-4 text-sm border border-gray-500 rounded-lg sm:p-5 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
-                          rows="4" placeholder="Votre avis ..."></textarea>
-                      <div class="flex justify-end">
-                          <button class="w-full p-2 mt-4 text-white bg-blue-600 rounded hover:bg-blue-700 md:max-w-60"
-                              type="submit">Publier</button>
-                      </div>
+              @can('isUser')
+                  <section class="max-w-3xl mx-auto mt-20">
+                      <form action="/book/{{ $book->id }}/create-review" method="POST">
+                          @csrf
+                          <label for="review_content" class="block mb-2 text-xl font-semibold text-start">Publier votre
+                              avis</label>
+                          <textarea name="review_content" id="review_content"
+                              class="block w-full px-4 py-3 mt-4 text-sm border border-gray-500 rounded-lg sm:p-5 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
+                              rows="4" placeholder="Votre avis ..."></textarea>
+                          <div class="flex justify-end">
+                              <button class="w-full p-2 mt-4 text-white bg-blue-600 rounded hover:bg-blue-700 md:max-w-60"
+                                  type="submit">Publier</button>
+                          </div>
 
-                  </form>
-              </section>
+                      </form>
+                  </section>
+              @endcan
           @endauth
       </div>
   @endsection

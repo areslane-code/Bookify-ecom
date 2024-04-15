@@ -42,6 +42,7 @@ class ReviewController extends Controller
 
     public function delete(Request $request, $id)
     {
+
         $review = Review::find($id);
         $review->delete();
         return redirect()->back();

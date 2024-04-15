@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("adresse");
             $table->string("total_quantity");
             $table->string("total_price");
+            $table->integer("status");
             $table->timestamp("created_at");
         });
     }

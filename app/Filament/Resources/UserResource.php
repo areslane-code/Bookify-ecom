@@ -35,7 +35,11 @@ class UserResource extends Resource
 
 
 
-
+    public static function canAccess(): bool
+    {
+        // authorize only admin
+        return auth()->user()->role === 2;
+    }
 
 
     public static function form(Form $form): Form
@@ -49,7 +53,10 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('role')
-                    ->options(["libraire", "client"])
+                    ->options([
+                        0 => 'client',
+                        1 => 'Libraire',
+                    ])
                     ->required()
                     ->hiddenOn("edit"),
                 Forms\Components\TextInput::make('phoneNumber')
@@ -63,6 +70,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
+                    ->visibleOn("create")
                     ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
                     ->maxLength(255),
             ]);

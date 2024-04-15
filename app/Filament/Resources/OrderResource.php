@@ -49,29 +49,44 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric(),
+                Tables\Columns\TextColumn::make('user.lastname')
+                    ->label("Nom"),
+                Tables\Columns\TextColumn::make('user.firstname')
+                    ->label("Prénom"),
                 Tables\Columns\TextColumn::make('adresse')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('total_quantity')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('total_price')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('total_price'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label("date de commande"),
+                Tables\Columns\TextColumn::make("status")
+                    ->formatStateUsing(function ($state) {
+                        $roleNames = [
+                            2 => 'Livrée',
+                            1 => 'confirmée',
+                            0 => 'Non confirmée'
+                        ];
+
+                        return $roleNames[$state] ?? $state;
+                    })
+                    ->color(function ($record) {
+                        if ($record->status === 0) {
+                            return "blue";
+                        } elseif ($record->status === 1) {
+                            return "purple";
+                        } else {
+                            return "green";
+                        }
+                    })
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->label("modifier"),
                 Tables\Actions\DeleteAction::make()->label(""),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array
@@ -86,7 +101,6 @@ class OrderResource extends Resource
         return [
             'index' => Pages\ListOrders::route('/'),
             'view' => Pages\ViewOrder::route('/{record}'),
-            'edit' => Pages\EditOrder::route('/{record}/edit'),
         ];
     }
 
