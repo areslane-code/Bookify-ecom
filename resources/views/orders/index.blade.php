@@ -155,7 +155,7 @@
                                         </tr>
                                         <!-- Modal -->
                                         <div class="absolute z-10 transform -translate-x-1/2 top-10 left-1/2">
-                                            <div class="relative w-screen max-w-sm px-4 py-8 bg-gray-100 border border-gray-600 sm:px-6 lg:px-8"
+                                            <div class="hidden relative w-screen max-w-sm px-4 py-8 bg-gray-100 border border-gray-600 sm:px-6 lg:px-8"
                                                 aria-modal="true" role="dialog" tabindex="-1">
                                                 <button
                                                     class="absolute text-gray-600 transition end-4 top-4 hover:scale-110">

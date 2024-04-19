@@ -37,12 +37,18 @@ class CouponResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('code')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(20),
                 Forms\Components\TextInput::make('percentage')
+                    ->numeric()
+                    ->minValue(0)
+                    ->maxValue(100)
                     ->required()
-                    ->numeric(),
+                    ->label("Pourcentage"),
                 Forms\Components\DatePicker::make('expires_at')
-                    ->required(),
+                    ->closeOnDateSelection()
+                    ->displayFormat('d/m/Y')
+                    ->required()
+                    ->label("Date d'expiration"),
             ]);
     }
 
@@ -54,10 +60,12 @@ class CouponResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('percentage')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->label("Pourcentage"),
                 Tables\Columns\TextColumn::make('expires_at')
-                    ->date()
-                    ->sortable(),
+                    ->date("d/m/Y")
+                    ->sortable()
+                    ->label("Date d'expiration"),
             ])
             ->filters([
                 //
@@ -66,9 +74,7 @@ class CouponResource extends Resource
                 Tables\Actions\EditAction::make()->label("modifier"),
                 Tables\Actions\DeleteAction::make()->label(""),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array

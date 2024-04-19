@@ -16,17 +16,19 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Electronics',
-            'Clothing',
-            'Books',
-            'Home & Garden',
-            'Sports & Outdoors',
-            'Health & Beauty',
-            'Toys & Games',
-            'Food & Beverages',
-            'Automotive',
-            'Travel & Leisure'
+            'Roman',
+            'Science-fiction',
+            'Policier & Thriller',
+            'Fantasy',
+            'Jeunesse',
+            'Biographie',
+            'Poésie',
+            'BD & Comics',
+            'Art & Photographie',
+            'Sciences & Techniques'
         ];
+
+
 
         foreach ($categories as $category) {
             DB::table('categories')->insert([

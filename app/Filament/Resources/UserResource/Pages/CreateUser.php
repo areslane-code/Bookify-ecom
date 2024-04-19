@@ -14,10 +14,12 @@ class CreateUser extends CreateRecord
 
     protected static bool $canCreateAnother = false;
 
+    protected ?string $heading = "Créer un compte libraire";
 
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
+        $data["role"] = 1;
         $data["created_at"] = date("Y-m-d H:i:s");
         return $data;
     }

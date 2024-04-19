@@ -48,21 +48,17 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('lastname')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label("Nom"),
                 Forms\Components\TextInput::make('firstname')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\Select::make('role')
-                    ->options([
-                        0 => 'client',
-                        1 => 'Libraire',
-                    ])
-                    ->required()
-                    ->hiddenOn("edit"),
+                    ->maxLength(255)
+                    ->label("Prénom"),
                 Forms\Components\TextInput::make('phoneNumber')
-                    ->numeric()
+                    ->tel()
+                    ->telRegex('/0[0-9]{9}/')
                     ->required()
-                    ->numeric(),
+                    ->label("Téléphone"),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
@@ -88,9 +84,9 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('firstname')
                     ->searchable()
-                    ->label("Prenom"),
+                    ->label("Prénom"),
                 Tables\Columns\TextColumn::make('role')
-                    ->label("role")
+                    ->label("Role")
                     ->formatStateUsing(function ($state) {
                         $roleNames = [
                             2 => 'Admin',
@@ -101,10 +97,10 @@ class UserResource extends Resource
                         return $roleNames[$state] ?? $state;
                     }),
                 Tables\Columns\TextColumn::make('phoneNumber')
-                    ->numeric()
-                    ->label("telephone"),
+                    ->label("Téléphone"),
                 Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
+                    ->searchable()
+                    ->label("Email"),
             ])
             ->filters([
                 //

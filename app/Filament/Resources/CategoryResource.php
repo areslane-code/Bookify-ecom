@@ -28,7 +28,8 @@ class CategoryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255)
+                    ->maxLength(30)
+                    ->label("Nom"),
             ]);
     }
 
@@ -37,6 +38,7 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label("Nom")
                     ->searchable(),
             ])
             ->filters([

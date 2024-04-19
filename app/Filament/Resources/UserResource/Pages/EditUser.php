@@ -31,7 +31,6 @@ class EditUser extends EditRecord
             ->color('gray');
     }
 
-
     protected function getHeaderActions(): array
     {
         return [

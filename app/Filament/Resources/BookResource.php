@@ -42,31 +42,37 @@ class BookResource extends Resource
                     ->getUploadedFileNameForStorageUsing(
                         fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName()),
                     )
-                    ->required(),
+                    ->required()
+                    ->label("Image"),
                 Forms\Components\TextInput::make('title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label("Titre"),
                 Forms\Components\TextInput::make('author')
                     ->required()
                     ->regex('/^[a-zA-Z]+$/')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label("Auteur"),
                 Forms\Components\TextInput::make('price')
                     ->required()
                     ->numeric()
-
-                    ->prefix('DA'),
+                    ->prefix('DA')
+                    ->label("Prix"),
                 Forms\Components\TextInput::make('quantity')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->label("Quantité"),
                 Forms\Components\Select::make('categories')
                     ->relationship('categories', "name")
                     ->searchable($condition = false)
                     ->preload()
                     ->multiple()
-                    ->required(),
+                    ->required()
+                    ->label("categories"),
                 Forms\Components\Textarea::make('description')
                     ->required()
                     ->columnSpanFull()
+                    ->label("Description"),
             ]);
     }
 
@@ -75,19 +81,23 @@ class BookResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
+                    ->searchable()
+                    ->label("Titre"),
                 Tables\Columns\TextColumn::make('author')
-                    ->searchable(),
+                    ->searchable()
+                    ->label("Auteur"),
                 Tables\Columns\TextColumn::make('price')
-                    ->numeric()
                     ->suffix(" " . "DA")
-                    ->sortable(),
+                    ->sortable()
+                    ->label("Prix"),
                 Tables\Columns\TextColumn::make('quantity')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->label("Quantité"),
                 Tables\Columns\TextColumn::make("user.firstname")
-                    ->label("ajouté par")
-                    ->searchable(),
+                    ->searchable()
+                    ->label("Publié par"),
+
             ])
             ->filters([
                 //

@@ -26,24 +26,6 @@ class OrderResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('adresse')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('total_quantity')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('total_price')
-                    ->required()
-                    ->maxLength(255),
-            ]);
-    }
 
     public static function table(Table $table): Table
     {
@@ -55,11 +37,12 @@ class OrderResource extends Resource
                     ->label("Prénom"),
                 Tables\Columns\TextColumn::make('adresse')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('total_price'),
+                Tables\Columns\TextColumn::make('total_price')
+                    ->label("Prix total"),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->label("date de commande"),
+                    ->label("Date de commande"),
                 Tables\Columns\TextColumn::make("status")
                     ->formatStateUsing(function ($state) {
                         $roleNames = [
@@ -79,6 +62,7 @@ class OrderResource extends Resource
                             return "green";
                         }
                     })
+                    ->label("État")
             ])
             ->filters([
                 //

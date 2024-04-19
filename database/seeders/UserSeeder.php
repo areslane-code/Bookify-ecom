@@ -39,8 +39,8 @@ class UserSeeder extends Seeder
                 'email' => 'user' . ($i + 1) . '@example.com',
                 'password' => Hash::make('password'),
                 'role' => 0,
-                'phoneNumber' => 02342323,
-                "created_at" =>   $randomStamp, // You can use Hash facade to hash passwords
+                'phoneNumber' => "0435435543",
+                "created_at" =>   $randomStamp,
             ]);
         }
     }
