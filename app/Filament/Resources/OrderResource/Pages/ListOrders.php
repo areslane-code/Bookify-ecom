@@ -25,15 +25,18 @@ class ListOrders extends ListRecords
             // "All" => Tab::make("")->label("Tout"),
             "Non confirmée" => Tab::make("")->query(function (Builder $query) {
                 $query->where("status", 0);
-            })->label("Non confirmée"),
+            })->label("Non confirmées"),
             "Confirmée" => Tab::make("")->query(function (Builder $query) {
                 $query->where("status", 1);
-            })->label("Confirmée"),
+            })->label("Confirmées"),
             "Livrée" => Tab::make("")->query(
                 function (Builder $query) {
                     $query->where("status", 2);
                 }
-            )->label("Livrée"),
+            )->label("Livrées"),
+            "Annulées" => Tab::make("")->query(function (Builder $query) {
+                $query->where("status", 3);
+            })->label("Annulées"),
 
         ];
     }

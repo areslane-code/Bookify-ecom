@@ -11,7 +11,7 @@ class Order extends Model
     use HasFactory;
     public $timestamps = false;
 
-    protected $fillable = ["adresse"];
+    protected $fillable = ["adresse", "coupon_id"];
 
     public function Books()
     {
