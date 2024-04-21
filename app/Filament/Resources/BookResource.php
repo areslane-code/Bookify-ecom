@@ -43,7 +43,14 @@ class BookResource extends Resource
                         fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName()),
                     )
                     ->required()
-                    ->label("Image"),
+                    ->previewable(true)
+                    ->label("Image")
+                    ->imageEditor()
+                    ->imageEditorAspectRatios([
+                        null,
+                        '4:3',
+                        '1:1',
+                    ]),
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255)
@@ -103,6 +110,7 @@ class BookResource extends Resource
                 //
             ])
             ->actions([
+
                 Tables\Actions\EditAction::make()->label("modifier"),
                 Tables\Actions\DeleteAction::make()->label(""),
             ])

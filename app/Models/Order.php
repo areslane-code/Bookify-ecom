@@ -13,10 +13,25 @@ class Order extends Model
 
     protected $fillable = ["adresse", "coupon_id"];
 
-    public function Books()
+    public function books()
     {
-        return $this->belongsToMany(Book::class);
+        return $this->belongsToMany(Book::class)->withPivot("quantity");
     }
+
+    // public function booksWithQuantity()
+    // {
+    //     // i will use this for keyvalue entry of filamentphp infolist
+    //     $books = $this->books();
+    //     $booktitlewithquantity = [];
+
+    //     foreach ($books as $book) {
+    //         $booktitlewithquantity[$book] = $book->pivot->quantity;
+    //     }
+    //     return
+    //         $booktitlewithquantity;
+    // }
+
+
 
     public function user()
     {
@@ -27,6 +42,7 @@ class Order extends Model
     {
         return $this->belongsTo(Coupon::class);
     }
+
 
     public static function countOrders(): array
     {

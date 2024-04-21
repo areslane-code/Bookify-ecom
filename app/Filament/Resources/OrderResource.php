@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources;
 
+
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderResource\RelationManagers\BooksRelationManager as OrderBooksRelationManager;
 use App\Models\Order;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -14,6 +16,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Infolists;
+use Filament\Infolists\Components\KeyValueEntry;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Support\Enums\FontWeight;
 
 class OrderResource extends Resource
@@ -28,6 +32,7 @@ class OrderResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
     protected static ?int $navigationSort = 2;
+
 
 
     public static function table(Table $table): Table
@@ -107,8 +112,12 @@ class OrderResource extends Resource
             ->bulkActions([]);
     }
 
+
     public static function infolist(Infolist $infolist): Infolist
     {
+        // this line is for retrieving books and their quantity
+
+        $books_and_quantity = [];
         return $infolist
             ->schema([
                 Infolists\Components\TextEntry::make('user.lastname')
@@ -131,15 +140,23 @@ class OrderResource extends Resource
                     ->label("Adresse")
                     ->weight(FontWeight::Medium)
                     ->columnSpanFull(),
-                Infolists\Components\TextEntry::make('coupon')
+                Infolists\Components\TextEntry::make('coupon.code')
                     ->size(Infolists\Components\TextEntry\TextEntrySize::Large)
                     ->weight(FontWeight::Bold)
                     ->label("Code promo utilisé")
-                    ->columnSpanFull()
+                    ->hidden(function ($record) {
+                        return !isset($record->coupon_id);
+                    }),
+                Infolists\Components\TextEntry::make('coupon.percentage')
+                    ->size(Infolists\Components\TextEntry\TextEntrySize::Large)
+                    ->weight(FontWeight::Bold)
+                    ->label("Pourcentage de réduction")
+                    ->formatStateUsing(function ($state) {
+                        return $state . " " . "%";
+                    })
                     ->hidden(function ($record) {
 
-                        dd($record->coupon);
-                        return isset($record);
+                        return !isset($record->coupon_id);
                     }),
                 Infolists\Components\TextEntry::make('total_price')
                     ->formatStateUsing(function ($state) {
@@ -147,8 +164,10 @@ class OrderResource extends Resource
                     })
                     ->size(Infolists\Components\TextEntry\TextEntrySize::Large)
                     ->weight(FontWeight::Bold)
-                    ->label("Prix Total")
+                    ->label("Prix Finale")
                     ->columnSpanFull(),
+
+
 
             ]);
     }
@@ -156,7 +175,7 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            OrderBooksRelationManager::class
         ];
     }
 

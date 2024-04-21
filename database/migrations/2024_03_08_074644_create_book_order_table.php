@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('book_order', function (Blueprint $table) {
             $table->foreignId("book_id")->references("id")->on("users")->constrained()->cascadeOnDelete();
             $table->foreignId("order_id")->references("id")->on("orders")->constrained()->cascadeOnDelete();
+            $table->integer("quantity");
             $table->primary(['book_id', 'order_id']);
         });
     }
