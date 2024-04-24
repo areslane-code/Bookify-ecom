@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('coupon_user', function (Blueprint $table) {
             $table->foreignId("user_id")->constrained("users")->cascadeOnDelete();
-            $table->foreignId("coupon_id")->constrained("coupons")->cascadeOnDelete();
-            $table->primary(['user_id', 'coupon_id']);
+            $table->string("coupon_code"); // Same data type as the primary key in coupons table
+            $table->foreign('coupon_code')->references('code')->on('coupons')->cascadeOnDelete();
+            $table->primary(['user_id', 'coupon_code']);
         });
     }
 

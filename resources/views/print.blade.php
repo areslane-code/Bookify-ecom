@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bon de commande</title>
+    <title>Bon de livraison</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -61,7 +61,7 @@
 
     <div class="invoice">
         <div class="company-logo">BOOKIFY</div>
-        <h2>Bon de commande</h2>
+        <h2>Bon de livraison</h2>
         <div class="invoice-details">
             <p><strong>Nom du Client :</strong> {{ $client }}</p>
             <p><strong>Numéro de bon de commande :</strong> #{{ $record->id }}</p>

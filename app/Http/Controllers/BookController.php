@@ -43,6 +43,7 @@ class BookController extends Controller
         $books = Book::whereAny([
             'title',
             'description',
+            "author"
         ], 'LIKE', '%' . $search . '%')->get();
         return view('books.search', compact('books'));
     }

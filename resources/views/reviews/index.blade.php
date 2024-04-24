@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('main')
-    <div class="flex flex-wrap items-stretch justify-center gap-4 px-4 py-8">
+    <div class="flex flex-wrap items-stretch justify-center gap-4 px-4 py-24">
         @if (!blank($userReviews))
             @foreach ($userReviews as $review)
                 <div x-data="{ isVisible: false }" class ="relative max-w-xs p-4 shadow-md bg-slate-50 md:w-1/3">

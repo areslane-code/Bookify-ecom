@@ -33,7 +33,7 @@ Route::get('/signup', [UserController::class, "create"])->middleware("guest");
 
 Route::post('/signup-check', [UserController::class, "store"])->middleware("guest");
 
-Route::get('/login', [UserController::class, "loginShow"])->middleware("guest");
+Route::get('/login', [UserController::class, "loginShow"])->middleware("guest")->name("login");
 
 Route::post('/login-check', [UserController::class, "login"])->middleware("guest");
 
@@ -52,3 +52,7 @@ Route::delete('/reviews/{id}/delete', [ReviewController::class, "delete"])->midd
 // Order Routing
 
 Route::get('/orders', [OrderController::class, "index"])->middleware("auth");
+
+Route::get('/orders/create', [OrderController::class, "create"])->middleware("auth");
+
+Route::get('/orders/cart/delete-item/{id}', [OrderController::class, "deleteItemFromCart"])->middleware("auth");

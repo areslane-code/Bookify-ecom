@@ -1,7 +1,7 @@
   @extends('layout')
 
   @section('main')
-      <div class="w-full max-w-lg px-8 py-4 mx-auto mt-12">
+      <div class="w-full max-w-lg px-8 py-4 mx-auto my-20">
           <div class="bg-white border border-gray-200 shadow-sm mt-7 rounded-xl">
               <div class="p-4 sm:p-7">
                   <div class="text-center">

@@ -47,7 +47,7 @@ class UserController extends Controller
 
     public function loginShow(Request $request)
     {
-        return view("users.login", []);
+        return view("users.login");
     }
 
     public function login(Request $request)
@@ -69,7 +69,7 @@ class UserController extends Controller
             $user = User::where('email', $request->email)->first();
             if (Auth::user()->role === 0) {
                 // Allow login
-                return redirect("/");
+                return redirect()->intended();
             } else if (Auth::user()->role === 1 || Auth::user()->role === 2) {
                 // Deny login
                 Auth::logout();
