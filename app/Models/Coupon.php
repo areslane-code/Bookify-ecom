@@ -9,9 +9,11 @@ class Coupon extends Model
 {
     use HasFactory;
 
+
     protected $fillable = ["code", "percentage", "expires_at"];
 
     public $timestamps = false;
+
 
     public function users()
     {

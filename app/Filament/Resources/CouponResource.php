@@ -17,6 +17,7 @@ class CouponResource extends Resource
 {
     protected static ?string $model = Coupon::class;
 
+
     protected static ?string $navigationLabel = "Codes promos";
 
     protected static ?string $modelLabel = "Codes de promotions";
@@ -24,6 +25,8 @@ class CouponResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
 
     protected static ?int $navigationSort = 5;
+
+
 
     public static function canAccess(): bool
     {
@@ -37,7 +40,8 @@ class CouponResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('code')
                     ->required()
-                    ->maxLength(20),
+                    ->maxLength(20)
+                    ->label("Code de promo"),
                 Forms\Components\TextInput::make('percentage')
                     ->numeric()
                     ->minValue(0)

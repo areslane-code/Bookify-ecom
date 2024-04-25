@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Coupon;
 use App\Models\CouponUser;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -25,18 +27,31 @@ class OrderController extends Controller
         $books = Book::whereIn('id', $book_ids)->get();
         // Calculate the sum of prices
         $totalPrice = $books->sum('price');
+        $finalPrice = null;
 
         // coupon
 
         $coupon = $request->coupon;
 
+
+
+        // check if the url has coupon
         if (isset($coupon)) {
-            $checkCouponAlreadyUsed = CouponUser::where('coupon_id', $coupon)
-                ->where('user_id', auth()->id)
-                ->first();
+            // check if the coupon exists
+            $exists_coupon = Coupon::find($coupon);
+            if (isset($exists_coupon)) {
+                // check if the user used the coupon before
+                $checkCouponAlreadyUsed = CouponUser::where('coupon_code', $coupon)
+                    ->where('user_id', Auth()->id())
+                    ->first();
+                if (!isset($checkCouponAlreadyUsed)) {
+                    $valid_coupon = $exists_coupon;
+                    $finalPrice = $totalPrice - $valid_coupon->percentage * $totalPrice;
+                }
+            }
         }
 
-        return view("orders.create", compact("books", "totalPrice"));
+        return view("orders.create", compact("books", "totalPrice", "finalPrice"));
     }
 
     public function deleteItemFromCart(Request $request, $id)

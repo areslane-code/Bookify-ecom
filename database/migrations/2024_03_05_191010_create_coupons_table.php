@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('coupons', function (Blueprint $table) {
-            $table->string("code")->primary();
+            $table->id();
+            $table->string("code");
             $table->float("percentage");
             $table->date("expires_at");
         });

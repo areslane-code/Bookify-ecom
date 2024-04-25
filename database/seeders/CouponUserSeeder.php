@@ -14,9 +14,6 @@ class CouponUserSeeder extends Seeder
     public function run(): void
     {
         //
-
-
-
-        DB::table('coupon_user')->insert(['user_id' => 1, 'coupon_code' => "code10"]);
+        DB::table('coupon_user')->insert(['user_id' => 1, 'coupon_id' => 1]);
     }
 }

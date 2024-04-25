@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->constrained("users")->cascadeOnDelete();
-            $table->string("coupon_code")->nullable(); // Same data type as the primary key in coupons table
-            $table->foreign('coupon_code')->references('code')->on('coupons')->cascadeOnDelete();
+            $table->foreignId("coupon_id")->nullable()->references('id')->on('coupons')->cascadeOnDelete();
             $table->string("adresse");
             $table->string("total_quantity");
             $table->string("total_price");

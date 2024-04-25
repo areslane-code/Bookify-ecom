@@ -70,17 +70,12 @@
 
                                     <div class="flex justify-between">
                                         <dt>Prix Totale</dt>
-                                        <dd>£25</dd>
-                                    </div>
-
-                                    <div class="flex justify-between">
-                                        <dt>Discount</dt>
-                                        <dd>-£20</dd>
+                                        <dd>{{ $totalPrice }} DA</dd>
                                     </div>
 
                                     <div class="flex justify-between text-lg font-bold">
                                         <dt>Prix Finale</dt>
-                                        <dd class="font-bitter">{{ $totalPrice }} DA</dd>
+                                        <dd class="font-bitter">{{ $finalPrice }} DA</dd>
                                     </div>
                                 </dl>
 

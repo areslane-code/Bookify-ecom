@@ -189,7 +189,7 @@ class BookSeeder extends Seeder
             'user_id' => 1,
             'price' => 2100,
             'quantity' => rand(min: 10, max: 90),
-            'description' => "Un roman qui explore la réalité subjective et les concepts de vie et de mort à travers une intrigue de science-fiction."
+            'description' => "Il s'agit de la description du roman de science-fiction intitulé Neuromancien (titre original : Neuromancer) écrit par William Gibson et publié en 1984. L'histoire se déroule dans un futur dystopique où la société est dominée par la technologie et où le cyberespace est devenu un élément central de la vie quotidienne."
 
         ]);
 
@@ -211,7 +211,7 @@ class BookSeeder extends Seeder
             'user_id' => 1,
             'price' => 2350,
             'quantity' => rand(min: 10, max: 90),
-            'description' => " "
+            'description' => "Dans la Conurb, la plus grande mégalopole du monde située en Amérique du Nord, Henry Dorsett Case est un « cowboy » du cyberespace, un hacker qui sillonne la Matrice. Il est le meilleur et rien ne lui résiste. Mais un jour, étant trop gourmand, il décide de doubler son employeur. Celui-ci, en représailles, lui injecte une mycotoxine russe qui détruit de manière sélective une partie de son système nerveux, celle qui est reliée aux « trodes » (les électrodes de sa console informatique). Case perd alors toute capacité à se connecter à la Matrice : pour lui, tout est perdu, il n'est plus rien..."
 
         ]);
         DB::table(table: 'books')->insert(values: [
@@ -359,7 +359,7 @@ class BookSeeder extends Seeder
 
         DB::table(table: 'books')->insert(values: [
             'title' => 'Les Annales du Disque-Monde : La Huitième Couleur',
-            'image' => 'Les_Annales_du_Disque-Monde_La Huitième Couleur.jpg',
+            'image' => 'la_huitieme_couleur.jpg',
             'author' => 'Terry Pratchett',
             'user_id' => 1,
             'price' => 1980,
@@ -490,15 +490,6 @@ class BookSeeder extends Seeder
             'description' => "Alice tombe dans un terrier de lapin et se retrouve dans un monde fantastique où elle rencontre des personnages étranges comme le Chapelier fou et le Chat du Cheshire. Le livre explore les thèmes de l'absurdité et de l'imagination."
         ]);
 
-        DB::table(table: 'books')->insert(values: [
-            'title' => '',
-            'image' => '',
-            'author' => '',
-            'user_id' => 1,
-            'price' => rand(min: 1900, max: 5500),
-            'quantity' => rand(min: 10, max: 90),
-            'description' => ""
-        ]);
 
         DB::table(table: 'books')->insert(values: [
             'title' => 'Charlie et la chocolaterie',

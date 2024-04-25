@@ -13,7 +13,6 @@ class CouponSeeder extends Seeder
      */
     public function run(): void
     {
-
         $discountCodes = [
             ['code' => 'CODE10', 'percentage' => 10.0, 'expires_at' => '2024-04-30'],
             ['code' => 'SPRING20', 'percentage' => 20.0, 'expires_at' => '2024-05-31'],

@@ -13,6 +13,8 @@ class Order extends Model
 
     protected $fillable = ["adresse", "coupon_id"];
 
+
+
     public function books()
     {
         return $this->belongsToMany(Book::class)->withPivot("quantity");
