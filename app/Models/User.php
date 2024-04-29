@@ -90,11 +90,6 @@ class User extends Authenticatable implements HasName, FilamentUser
     }
 
 
-    public function coupons()
-    {
-        return $this->belongsToMany(Coupon::class);
-    }
-
     public function reviews()
     {
         return $this->hasMany(Order::class);

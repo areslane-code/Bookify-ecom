@@ -132,9 +132,6 @@ class OrderResource extends Resource
                 Infolists\Components\TextEntry::make('user.phoneNumber')
                     ->size(Infolists\Components\TextEntry\TextEntrySize::Large)
                     ->label("Téléphone"),
-                Infolists\Components\TextEntry::make('total_quantity')
-                    ->size(Infolists\Components\TextEntry\TextEntrySize::Large)
-                    ->label("Quantité totale des livres"),
                 Infolists\Components\TextEntry::make('adresse')
                     ->size(Infolists\Components\TextEntry\TextEntrySize::Large)
                     ->label("Adresse")

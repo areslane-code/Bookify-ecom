@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId("user_id")->constrained("users")->cascadeOnDelete();
             $table->foreignId("coupon_id")->nullable()->references('id')->on('coupons')->cascadeOnDelete();
             $table->string("adresse");
-            $table->string("total_quantity");
             $table->string("total_price");
             $table->integer("status");
             $table->timestamp("created_at");

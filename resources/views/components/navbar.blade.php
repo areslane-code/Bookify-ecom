@@ -1,3 +1,10 @@
+@php
+    $cart = session('cart');
+    $cart_length = 0;
+    if (isset($cart)) {
+        $cart_length = count($cart);
+    }
+@endphp
 <!-- ========== HEADER ========== -->
 <header class="relative">
     <div x-data="{ open: false }"
@@ -9,14 +16,16 @@
 
                 <div class="flex items-center justify-center sm:hidden gap-x-4">
 
-                    <div class="relative">
-                        <a href="/orders/create"
-                            class=" material-symbols-outlined text-md text-white/[.8] ahover:text-white ">
-                            shopping_cart
-                        </a>
-                        <p class="absolute px-2 py-1 text-xs font-semibold text-blue-700 bg-white rounded-full bottom-4 right-6"
-                            id="cart-items-number-1"></p>
-                    </div>
+                    @can('isUser')
+                        <div class="relative">
+                            <a href="/orders/create"
+                                class=" material-symbols-outlined text-md text-white/[.8] ahover:text-white ">
+                                shopping_cart
+                            </a>
+                            <p class="absolute px-2 py-1 text-xs font-semibold text-blue-700 bg-white rounded-full bottom-4 right-6"
+                                id="cart-items-number-1">{{ $cart_length }}</p>
+                        </div>
+                    @endcan
 
 
                     <button x-on:click="open = ! open" type="button"
@@ -47,14 +56,16 @@
                     class="flex flex-col mt-5 gap-y-4 gap-x-0 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7">
                     <a class="font-medium text-white sm:py-6" href="/" aria-current="page">Accueil</a>
 
-                    <div class="relative">
-                        <a href="/orders/create"
-                            class="material-symbols-outlined text-md text-white/[.8] ahover:text-white ">shopping_cart
-                        </a>
-                        <!--cart items number-->
-                        <p class="absolute px-[0.5rem] py-[0.15rem] text-xs font-semibold text-blue-700 bg-white rounded-full bottom-4 right-6"
-                            id="cart-items-number-2"></p>
-                    </div>
+                    @can('isUser')
+                        <div class="relative">
+                            <a href="/orders/create"
+                                class="material-symbols-outlined text-md text-white/[.8] ahover:text-white ">shopping_cart
+                            </a>
+                            <!--cart items number-->
+                            <p class="absolute px-[0.5rem] py-[0.15rem] text-xs font-semibold text-blue-700 bg-white rounded-full bottom-4 right-6"
+                                id="cart-items-number-2">{{ $cart_length }}</p>
+                        </div>
+                    @endcan
 
                     @can('isUser')
                         <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/orders">Commandes</a>
@@ -153,4 +164,17 @@
     <div id="notification-message"></div>
 </div>
 
+@php
+    $message = session('message');
+    if (isset($message)) {
+        echo '<script>
+            let notification = document.getElementById(\'notification\');
+                    let notificationMessage = document.getElementById(\'notification-message\');
+                            notificationMessage.innerText = "' . $message . '";; notification.style.display = \'flex\';
+                            setTimeout(function() {
+                                notification.style.display = \'none\';
+                            }, 1000); // Hide after 1 seconds
+        </script>';
+    }
+@endphp
 <!-- ========== END HEADER ========== -->

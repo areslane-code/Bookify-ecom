@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
@@ -55,4 +56,12 @@ Route::get('/orders', [OrderController::class, "index"])->middleware("auth");
 
 Route::get('/orders/create', [OrderController::class, "create"])->middleware("auth");
 
+Route::post('/order/store', [OrderController::class, "store"])->middleware("auth");
+
 Route::get('/orders/cart/delete-item/{id}', [OrderController::class, "deleteItemFromCart"])->middleware("auth");
+
+Route::post('/cart/add', [OrderController::class, "addToCart"])->middleware("auth");
+
+// coupon routing
+Route::post('/check-coupon', [CouponController::class, "check"])->middleware("auth");
+Route::delete('/cancel-coupon', [CouponController::class, "cancel"])->middleware("auth");

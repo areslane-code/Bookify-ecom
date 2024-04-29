@@ -14,12 +14,6 @@ class Coupon extends Model
 
     public $timestamps = false;
 
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class)->where("role", "0");
-    }
-
     public function orders()
     {
         return $this->hasMany(Order::class);

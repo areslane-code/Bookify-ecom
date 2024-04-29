@@ -27,18 +27,40 @@
                       @endforeach
                   </div>
 
-                  <button onClick="addBookToCart({{ $book }})"
-                      class="flex items-center justify-center w-full px-4 py-3 mt-6 font-semibold text-white bg-blue-600 border border-transparent rounded-lg text-md gap-x-4 hover:bg-blue-700 font-raleway">
-                      <div type="button" class="flex items-center justify-center gap-x-2">
-                          Ajouter au<span class="material-symbols-outlined ">shopping_cart</span>
-                      </div>
-                      <span class="text-lg font-semibold font-bitter">{{ $book->price . ' ' . 'Da' }}</span>
-                  </button>
+                  <form action="/cart/add" method="POST" class="mt-4">
+                      @csrf
+                      {{-- book_id input --}}
+                      <input type="hidden" name="book_id" value="{{ $book->id }}">
+                      <div class="max-w-sm space-y-3">
+                          <div class="relative">
+                              {{-- book quantity input --}}
+                              <input type="number" value="1"
+                                  class="block w-full px-4 py-3 text-sm text-gray-500 bg-gray-100 border-transparent rounded-lg font-bitter peer ps-11 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
+                                  placeholder="Quantité" name="book_quantity">
+                              <div
+                                  class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
+                                  <svg class="flex-shrink-0 text-gray-500 size-4 " fill="none" viewBox="0 0 24 24"
+                                      stroke-width="1.5" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
 
+                                  </svg>
+                              </div>
+                          </div>
+
+                          <button type="submit"
+                              class="flex items-center justify-center w-full px-4 py-3 mt-6 font-semibold text-white bg-blue-600 border border-transparent rounded-lg text-md gap-x-4 hover:bg-blue-700 font-raleway">
+                              <div type="button" class="flex items-center justify-center gap-x-2">
+                                  Ajouter au<span class="material-symbols-outlined ">shopping_cart</span>
+                              </div>
+                              <span class="text-lg font-semibold font-bitter">{{ $book->price . ' ' . 'Da' }}</span>
+                          </button>
+
+                  </form>
               </div>
           </div>
           @if (!blank($similarBooks))
-              <section class="max-w-3xl mx-auto mt-20">
+              <section class="w-full max-w-3xl mx-auto mt-20 ">
                   <h3 class="text-xl font-bold text-start lg:text-2xl">Livres similaires:</h3>
                   <div class="flex flex-wrap items-center justify-center gap-8 mt-10 sm:justify-start xl:gap-10">
                       @foreach ($similarBooks as $similarBook)
@@ -47,7 +69,8 @@
                   </div>
               </section>
           @endif
-          <section class="max-w-3xl mx-auto mt-20">
+
+          <section class="w-full max-w-3xl mx-auto mt-20">
               <h3 class="text-xl font-bold text-start lg:text-2xl">Avis des utilisateurs:</h3>
               @if (blank($reviews))
                   <p class="mt-4">Aucun avis est disponible pour ce livre pour le moment.</p>
@@ -62,7 +85,7 @@
 
           @auth
               @can('isUser')
-                  <section class="max-w-3xl mx-auto mt-20">
+                  <section class="w-full max-w-3xl mx-auto mt-20">
                       <form action="/book/{{ $book->id }}/create-review" method="POST">
                           @csrf
                           <label for="review_content" class="block mb-2 text-xl font-semibold text-start">Publier votre
