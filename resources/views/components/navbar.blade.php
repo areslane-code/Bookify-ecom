@@ -27,7 +27,6 @@
                         </div>
                     @endcan
 
-
                     <button x-on:click="open = ! open" type="button"
                         class="flex items-center justify-center text-sm font-semibold text-white border rounded-lg hs-collapse-toggle size-9 gap-x-2 border-white/20 hover:border-white/40 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                         data-hs-collapse="#navbar-collapse-with-animation"
@@ -66,7 +65,6 @@
                                 id="cart-items-number-2">{{ $cart_length }}</p>
                         </div>
                     @endcan
-
                     @can('isUser')
                         <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/orders">Commandes</a>
                         <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/reviews">Avis</a>
@@ -98,6 +96,7 @@
                         </a>
                     @endauth
                 </div>
+
             </div>
             <!--Small devices-->
             <div x-show="open" id="navbar-collapse-with-animation"
@@ -140,8 +139,7 @@
         </nav>
     </div>
     <div class="w-full px-4 pt-2 pb-4 bg-blue-600">
-        <label for="search" class="sr-only">Search</label>
-        <form action="/book" method="GET" class="flex rounded-lg shadow-sm sm:w-1/2 sm:mx-auto">
+        <form action="/book" method="GET" class="flex rounded-lg shadow-sm 0 sm:w-1/2 sm:mx-auto">
             <button type="submit"
                 class="w-[2.875rem] h-[2.875rem] flex-shrink-0 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-s-md border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                 <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -153,6 +151,8 @@
             </button>
             <input type="text" id="search" placeholder="Rechercher un livre" name="search"
                 class="block w-full px-4 py-3 text-sm border-gray-200 shadow-sm lg:mx-auto rounded-e-lg focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+            <!-- End Select -->
+
         </form>
     </div>
 </header>

@@ -27,6 +27,7 @@ class OrderController extends Controller
 
         if (!isset($cart)) {
             Session::put("cart", []);
+            $cart = [];
         }
 
         $book_id = $request->book_id;
@@ -127,6 +128,7 @@ class OrderController extends Controller
         $cart = Session::get("cart");
 
         foreach ($cart as $book_id => $order_quantity) {
+            // creating the rows in BookOrder
             $book_order = BookOrder::create(
                 [
                     "book_id" => $book_id,
@@ -134,6 +136,13 @@ class OrderController extends Controller
                     "quantity" => $order_quantity
                 ]
             );
+        }
+
+        foreach ($cart as $book_id => $order_quantity) {
+            // substracting the ordered quantity from the total quantity of the book
+            $book = Book::find($book_id);
+            $book->quantity = $book->quantity - $order_quantity;
+            $book->save();
         }
 
 
