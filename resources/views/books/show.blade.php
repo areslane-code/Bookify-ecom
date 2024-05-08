@@ -70,26 +70,82 @@
               </section>
           @endif
 
-          <section class="w-full max-w-3xl mx-auto mt-20">
-              <h3 class="text-xl font-bold text-start lg:text-2xl">Avis des utilisateurs:</h3>
-              @if (blank($reviews))
-                  <p class="mt-4">Aucun avis est disponible pour ce livre pour le moment.</p>
-              @else
-                  <div class="flex flex-wrap items-stretch justify-center gap-8 mt-10 sm:justify-start xl:gap-10">
-                      @foreach ($reviews as $review)
-                          <x-review :review="$review" />
-                      @endforeach
-                  </div>
-              @endif
-          </section>
 
           @auth
               @can('isUser')
                   <section class="w-full max-w-3xl mx-auto mt-20">
                       <form action="/book/{{ $book->id }}/create-review" method="POST">
                           @csrf
+
                           <label for="review_content" class="block mb-2 text-xl font-semibold text-start">Publier votre
                               avis</label>
+
+
+                          <!-- Rating -->
+                          <div class="flex flex-row-reverse items-center justify-end my-4">
+                              <input id="hs-ratings-readonly-1" type="radio"
+                                  class="text-transparent bg-transparent border-0 appearance-none cursor-pointer peer -ms-5 size-5 checked:bg-none focus:bg-none focus:ring-0 focus:ring-offset-0"
+                                  name="rating" value="5">
+                              <label for="hs-ratings-readonly-1"
+                                  class="text-gray-300 pointer-events-none peer-checked:text-yellow-400 ">
+                                  <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                      fill="currentColor" viewBox="0 0 16 16">
+                                      <path
+                                          d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z">
+                                      </path>
+                                  </svg>
+                              </label>
+                              <input id="hs-ratings-readonly-2" type="radio"
+                                  class="text-transparent bg-transparent border-0 appearance-none cursor-pointer peer -ms-5 size-5 checked:bg-none focus:bg-none focus:ring-0 focus:ring-offset-0"
+                                  name="rating" value="4">
+                              <label for="hs-ratings-readonly-2"
+                                  class="text-gray-300 pointer-events-none peer-checked:text-yellow-400 ">
+                                  <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                      fill="currentColor" viewBox="0 0 16 16">
+                                      <path
+                                          d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z">
+                                      </path>
+                                  </svg>
+                              </label>
+                              <input id="hs-ratings-readonly-3" type="radio"
+                                  class="text-transparent bg-transparent border-0 appearance-none cursor-pointer peer -ms-5 size-5 checked:bg-none focus:bg-none focus:ring-0 focus:ring-offset-0"
+                                  name="rating" value="3">
+                              <label for="hs-ratings-readonly-3"
+                                  class="text-gray-300 pointer-events-none peer-checked:text-yellow-400 ">
+                                  <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                      fill="currentColor" viewBox="0 0 16 16">
+                                      <path
+                                          d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z">
+                                      </path>
+                                  </svg>
+                              </label>
+                              <input id="hs-ratings-readonly-4" type="radio"
+                                  class="text-transparent bg-transparent border-0 appearance-none cursor-pointer peer -ms-5 size-5 checked:bg-none focus:bg-none focus:ring-0 focus:ring-offset-0"
+                                  name="rating" value="2">
+                              <label for="hs-ratings-readonly-4"
+                                  class="text-gray-300 pointer-events-none peer-checked:text-yellow-400 ">
+                                  <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="16"
+                                      height="16" fill="currentColor" viewBox="0 0 16 16">
+                                      <path
+                                          d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z">
+                                      </path>
+                                  </svg>
+                              </label>
+                              <input id="hs-ratings-readonly-5" type="radio"
+                                  class="text-transparent bg-transparent border-0 appearance-none cursor-pointer peer -ms-5 size-5 checked:bg-none focus:bg-none focus:ring-0 focus:ring-offset-0"
+                                  name="rating" value="1" checked>
+                              <label for="hs-ratings-readonly-5"
+                                  class="text-gray-300 pointer-events-none peer-checked:text-yellow-400 ">
+                                  <svg class="flex-shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="16"
+                                      height="16" fill="currentColor" viewBox="0 0 16 16">
+                                      <path
+                                          d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z">
+                                      </path>
+                                  </svg>
+                              </label>
+                          </div>
+                          <!-- End Rating -->
+
                           <textarea name="review_content" id="review_content"
                               class="block w-full px-4 py-3 mt-4 text-sm border border-gray-500 rounded-lg sm:p-5 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
                               rows="4" placeholder="Votre avis ..."></textarea>
@@ -102,5 +158,22 @@
                   </section>
               @endcan
           @endauth
+
+          <section class="w-full max-w-3xl mx-auto mt-20">
+              <h3 class="text-xl font-bold text-start lg:text-2xl">Avis des utilisateurs:</h3>
+              @if (blank($reviews))
+                  <p class="mt-4">Aucun avis est disponible pour ce livre pour le moment.</p>
+              @else
+                  <div class="flex flex-wrap items-stretch justify-center gap-8 mt-10 sm:justify-start xl:gap-10">
+                      @foreach ($reviews as $review)
+                          <x-review :review="$review" />
+                      @endforeach
+                  </div>
+              @endif
+              <div class="mt-8">
+                  {{ $reviews->links() }}
+
+              </div>
+          </section>
       </div>
   @endsection

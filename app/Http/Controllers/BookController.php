@@ -31,7 +31,7 @@ class BookController extends Controller
         })->where('id', '!=', $book->id)->limit(6)->inRandomOrder()->get();
 
         // putting the reviews in a variable in order to pass it to the view
-        $reviews = $book->reviews;
+        $reviews = $book->reviews()->cursorPaginate(3);
 
         return view('books.show', compact('book', "similarBooks", "reviews"));
     }

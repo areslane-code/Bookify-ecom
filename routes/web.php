@@ -40,6 +40,10 @@ Route::post('/login-check', [UserController::class, "login"])->middleware("guest
 
 Route::get('/logout', [UserController::class, "logout"])->middleware("auth");
 
+Route::get('/account', [UserController::class, "edit"])->middleware("auth");
+Route::post('/account/update-password', [UserController::class, "updatePassword"])->middleware("auth");
+Route::post('/account/update-infos', [UserController::class, "updateInfos"])->middleware("auth");
+
 // Review Routing
 
 Route::get('/reviews', [ReviewController::class, "index"])->middleware("auth");

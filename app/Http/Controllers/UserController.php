@@ -20,10 +20,10 @@ class UserController extends Controller
 
 
         $data = $request->validate([
-            'nom' => ['required'],
-            'prenom' => ['required', ""],
-            'telephone' => ['required'],
-            'email' => ['required', 'email', 'unique:users,email'],
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'telephone' => 'required|string|max:10',
+            'email' => 'required|email|max:255|unique:users,email',
             'password' => ['required', 'min:8'],
         ]);
 
@@ -53,7 +53,7 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'email' => 'required|email|max:255',
             'password' => ['required', "min:8"],
             [
                 'email.required' => 'Le champ email est requis.',
@@ -80,6 +80,68 @@ class UserController extends Controller
         } else {
             return redirect()->back()->withErrors(['general' => 'Email ou mot de passe est incorrect']);
         }
+    }
+
+    public function edit()
+    {
+        $user = auth()->user();
+        return view("users.edit", compact("user"));
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $data = $request->validate([
+            'oldPassword' => 'required|min:8',
+            'newPassword' => 'required|min:8',
+        ]);
+
+        // Get the currently authenticated user
+        $user = User::find(auth()->id());
+
+        // Check if the old password matches the user's current password
+        if (Hash::check($data["oldPassword"], $user->password)) {
+            // Update the user's password with the new one
+            $user->password = Hash::make($data["newPassword"]);
+            $user->save();
+            return back();
+        } else {
+            return back()->withErrors(['password_incorrect' => "l'ancien mot de passe est incorrect."]);
+        }
+    }
+
+    public function updateInfos(Request $request)
+    {
+
+        $data = $request->validate([
+            'nom' => 'nullable|string|max:255',
+            'prenom' => 'nullable|string|max:255',
+            'telephone' => 'nullable|string|max:10|min:10',
+            'email' => 'email|nullable|max:255|unique:users,email,' . auth()->id(),
+        ]);
+
+        $user = User::find(auth()->id());
+
+        if ($request->has('nom') && isset($data["nom"])) {
+            $user->lastname = $data["nom"];
+        }
+
+        if ($request->has('prenom') && isset($data["prenom"])) {
+            $user->firstname = $data["prenom"];
+        }
+
+        if ($request->has('telephone') && isset($data["telephone"])) {
+            $user->phoneNumber = $data["telephone"];
+        }
+
+        if ($request->has('email') && isset($data["email"])) {
+            if ($user->email !== $data["email"]) {
+                $user->email = $data["email"];
+            }
+        }
+
+        $user->save();
+
+        return back()->with("message", "Votre informations sont modifié");
     }
 
     public function logout(Request $request)

@@ -19,13 +19,23 @@ class ReviewController extends Controller
 
     public function create(Request $request, $book_id)
     {
+        $data = $request->validate([
+            'rating' => 'required',
+            'content' => 'nullable|string|max:255|min:1',
+        ]);
+
         $review = new Review;
 
 
+        $review->rating = $request->rating;
+        $content = $request->review_content;
+        if ($content === null) {
+            $content = "";
+        }
 
-        $review->book_id = $book_id;
         $review->user_id = auth()->id();
-        $review->content = $request->review_content;
+        $review->book_id = $book_id;
+        $review->content = $content;
 
         $review->save();
         return redirect()->back();
@@ -34,8 +44,20 @@ class ReviewController extends Controller
 
     public function update(Request $request, $id)
     {
+        $data = $request->validate([
+            'rating' => 'required',
+            'content' => 'nullable|string|max:255|min:1',
+        ]);
+
         $review = Review::find($id);
-        $review->content = $request->review_modified;
+        $review->rating = $request->rating;
+        $content = $request->review_modified;
+        if ($content === null) {
+            $content = "";
+        }
+
+        $review->content = $content;
+
         $review->update();
         return redirect()->back();
     }

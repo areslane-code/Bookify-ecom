@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("user_id")->constrained("users")->cascadeOnDelete();
             $table->foreignId("book_id")->constrained("books")->cascadeOnDelete();
+            $table->integer("rating");
             $table->longText("content");
         });
     }
