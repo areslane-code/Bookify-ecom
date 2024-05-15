@@ -39,11 +39,9 @@ class BookResource extends Resource
                     ->visibility('public')
                     ->directory("public")
                     ->preserveFilenames()
-                    ->getUploadedFileNameForStorageUsing(
-                        fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName()),
-                    )
                     ->required()
                     ->previewable(true)
+
                     ->label("Image")
                     ->imageEditor()
                     ->imageEditorAspectRatios([
@@ -57,7 +55,7 @@ class BookResource extends Resource
                     ->label("Titre"),
                 Forms\Components\TextInput::make('author')
                     ->required()
-                    ->regex('/^[a-zA-Z]+$/')
+                    ->regex('/^[a-zA-Z ]+$/')
                     ->maxLength(255)
                     ->label("Auteur"),
                 Forms\Components\TextInput::make('price')
@@ -100,10 +98,11 @@ class BookResource extends Resource
                 Tables\Columns\TextColumn::make('quantity')
                     ->numeric()
                     ->sortable()
-                    ->label("Quantité"),
-                Tables\Columns\TextColumn::make("user.firstname")
-                    ->searchable()
-                    ->label("Publié par"),
+                    ->label("Quantité")
+                    ->badge()
+                    ->color(function ($state, $record): string {
+                        return $record->quantity > 0 ? "green" : "danger";
+                    }),
 
             ])
             ->filters([

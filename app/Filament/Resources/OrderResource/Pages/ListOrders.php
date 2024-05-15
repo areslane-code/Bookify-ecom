@@ -12,32 +12,49 @@ class ListOrders extends ListRecords
 {
     protected static string $resource = OrderResource::class;
 
-    protected function getHeaderActions(): array
-    {
-        return [
-            Actions\CreateAction::make(),
-        ];
-    }
 
     public function getTabs(): array
     {
         return [
-            // "All" => Tab::make("")->label("Tout"),
-            "Non confirmée" => Tab::make("")->query(function (Builder $query) {
-                $query->where("status", 0);
-            })->label("Non confirmées"),
-            "Confirmée" => Tab::make("")->query(function (Builder $query) {
-                $query->where("status", 1);
-            })->label("Confirmées"),
-            "Livrée" => Tab::make("")->query(
-                function (Builder $query) {
-                    $query->where("status", 2);
-                }
-            )->label("Livrées"),
-            "Annulées" => Tab::make("")->query(function (Builder $query) {
-                $query->where("status", 3);
-            })->label("Annulées"),
+            "tout" => Tab::make("")
+                ->label("Toutes les commandes"),
 
+            "nouvelles commandes" => Tab::make()->query(function (Builder $query) {
+                $query->where("status_id", 1);
+            })
+                ->label("Nouvelles"),
+
+            "confirmée" => Tab::make("")->query(function (Builder $query) {
+                $query->where("status_id", 2);
+            })
+                ->label("Confirmées"),
+
+            "en cours de préparation" => Tab::make()->query(
+                function (Builder $query) {
+                    $query->where("status_id", 3);
+                }
+            )
+                ->label("En cours de préparation"),
+
+            "en cours de livraison" => Tab::make()->query(function (Builder $query) {
+                $query->where("status_id", 4);
+            })
+                ->label("En cours de livraison"),
+
+            "livrée" => Tab::make()->query(function (Builder $query) {
+                $query->where("status_id", 5);
+            })
+                ->label("Livrées"),
+
+            "retournée" => Tab::make()->query(function (Builder $query) {
+                $query->where("status_id", 6);
+            })
+                ->label("Retournées"),
+
+            "annulée" => Tab::make()->query(function (Builder $query) {
+                $query->where("status_id", 7);
+            })
+                ->label("Annulées"),
         ];
     }
 }

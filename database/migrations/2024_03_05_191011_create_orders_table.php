@@ -19,8 +19,8 @@ return new class extends Migration
             $table->foreignId("coupon_id")->nullable()->references('id')->on('coupons')->cascadeOnDelete();
             $table->string("adresse");
             $table->string("total_price");
-            $table->integer("status");
-            $table->timestamp("created_at");
+            $table->foreignId("status_id")->nullable()->constrained("order_statuses")->nullOnDelete();
+            $table->timestamps();
         });
     }
 

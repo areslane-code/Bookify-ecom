@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CouponSeeder::class);
         $this->call(BookSeeder::class);
         $this->call(ReviewSeeder::class);
+        $this->call(OrderStatusSeeder::class);
         $this->call(OrderSeeder::class);
-        // $this->call(CouponUserSeeder::class);
         $this->call(BookCategorySeeder::class);
         $this->call(BookOrderSeeder::class);
     }

@@ -19,11 +19,11 @@ class ViewOrder extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\Action::make("imprimer bon de commande")
+            Actions\Action::make("imprimer bon de livraison")
                 ->action(fn (Order $record) => ViewOrder::printrecord($record))
                 ->visible(function ($record) {
                     // visible only when the order is confirmed.
-                    return $record->status === 1;
+                    return $record->status_id === 2 || $record->status_id === 3 || $record->status_id === 4 || $record->status_id === 5;
                 })
         ];
     }

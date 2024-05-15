@@ -14,7 +14,7 @@ class CreateBook extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $data['user_id'] = auth()->id();
+        $data["image"] = str_replace("public/", "", $data["image"]);
         return $data;
     }
 }

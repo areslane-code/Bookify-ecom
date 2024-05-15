@@ -51,26 +51,17 @@ class OrderResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->label("Date de commande"),
-                Tables\Columns\TextColumn::make("status")
-                    ->formatStateUsing(function ($state) {
-                        $roleNames = [
-                            3 => 'Annulée',
-                            2 => 'Livrée',
-                            1 => 'confirmée',
-                            0 => 'Non confirmée'
-                        ];
-
-                        return $roleNames[$state] ?? $state;
-                    })
-                    ->color(function ($record) {
-                        if ($record->status === 0) {
-                            return "blue";
-                        } elseif ($record->status === 1) {
-                            return "purple";
-                        } elseif ($record->status === 2) {
-                            return "green";
-                        } elseif ($record->status === 3) {
+                Tables\Columns\TextColumn::make("status.status")
+                    ->badge()
+                    ->color(function ($state) {
+                        if ($state === "annulée" || $state === "retournée") {
                             return "danger";
+                        } else if ($state === "livrée") {
+                            return "success";
+                        } elseif ($state === "en attente de confirmation") {
+                            return "blue";
+                        } else {
+                            return "purple";
                         }
                     })
                     ->label("État")
@@ -79,45 +70,69 @@ class OrderResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ActionGroup::make([
-                    Tables\Actions\Action::make("Confirmer")
-                        ->action(function (Order $record) {
-                            if ($record->status != 2) {
-                                $record->status = $record->status + 1;
+                Tables\Actions\ActionGroup::make(
+                    [
+                        // confirm order action
+                        Tables\Actions\Action::make("Confirmer la commande")
+                            ->action(function (Order $record) {
+                                $record->status_id = 2;
                                 $record->save();
-                            }
-                        })
+                            })
+                            ->icon("heroicon-s-check")
 
-                        ->color("primary")
-                        ->requiresConfirmation()
-                        ->label(function (Order $record) {
-                            if ($record->status === 0) {
-                                return "Confirmer la commande";
-                            } elseif ($record->status === 1) {
-                                return "Confirmer la livraison";
-                            }
-                        }),
-                    Tables\Actions\Action::make("Annuler")
-                        ->action(function (Order $record) {
-                            $record->status = 3;
-                            $record->save();
-                        })
-
-                        ->color("danger")
-                        ->requiresConfirmation(),
-                ])->hidden(function (Order $record) {
-                    return $record->status === 2 || $record->status === 3;
-                })
-            ])
-            ->bulkActions([]);
+                            ->requiresConfirmation(),
+                        // preparing order action
+                        Tables\Actions\Action::make("Preparer la commande")
+                            ->action(function (Order $record) {
+                                $record->status_id = 3;
+                                $record->save();
+                            })
+                            ->icon("heroicon-o-shopping-bag")
+                            ->requiresConfirmation(),
+                        // starting shipment process action
+                        Tables\Actions\Action::make("Passer a la livraison")
+                            ->action(function (Order $record) {
+                                $record->status_id = 4;
+                                $record->save();
+                            })
+                            ->icon("heroicon-o-rocket-launch")
+                            ->requiresConfirmation(),
+                        // confirm shipment action
+                        Tables\Actions\Action::make("Confirmer la livraison")
+                            ->action(function (Order $record) {
+                                $record->status_id = 5;
+                                $record->save();
+                            })
+                            ->icon("heroicon-s-check-circle")
+                            ->requiresConfirmation(),
+                        // order is returned action
+                        Tables\Actions\Action::make("Commande retournée")
+                            ->action(function (Order $record) {
+                                $record->status_id = 6;
+                                $record->save();
+                            })
+                            ->icon("heroicon-o-arrow-uturn-left")
+                            ->requiresConfirmation(),
+                        // cancel order action
+                        Tables\Actions\Action::make("Annuler")
+                            ->action(function (Order $record) {
+                                $record->status_id = 7;
+                                $record->save();
+                            })
+                            ->icon("heroicon-o-x-mark")
+                            ->requiresConfirmation(),
+                    ]
+                )->hidden(
+                    function (Order $record) {
+                        return $record->status_id === 5  || $record->status_id === 6 || $record->status_id === 7;
+                    }
+                ),
+            ]);
     }
 
 
     public static function infolist(Infolist $infolist): Infolist
     {
-        // this line is for retrieving books and their quantity
-
-        $books_and_quantity = [];
         return $infolist
             ->schema([
                 Infolists\Components\TextEntry::make('user.lastname')
@@ -163,9 +178,6 @@ class OrderResource extends Resource
                     ->weight(FontWeight::Bold)
                     ->label("Prix Finale")
                     ->columnSpanFull(),
-
-
-
             ]);
     }
 

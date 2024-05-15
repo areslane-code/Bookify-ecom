@@ -95,7 +95,16 @@ class UserResource extends Resource
                         ];
 
                         return $roleNames[$state] ?? $state;
-                    }),
+                    })
+                    ->badge()
+                    ->color(function ($state): string {
+                        return match ($state) {
+                            0 => "blue",
+                            1 => "green",
+                            2 => "danger"
+                        };
+                    })
+                    ->label("Role"),
                 Tables\Columns\TextColumn::make('phoneNumber')
                     ->label("Téléphone"),
                 Tables\Columns\TextColumn::make('email')
@@ -106,7 +115,7 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->label("modifier"),
+                Tables\Actions\EditAction::make()->label("modifier")->hidden(fn ($record) => $record->role === 0),
                 Tables\Actions\DeleteAction::make()->label(""),
 
             ])

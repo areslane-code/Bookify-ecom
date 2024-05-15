@@ -1,8 +1,8 @@
 @props(['book'])
 <div id={{ $book->id }} class="w-40 transition duration-300 hover:scale-110">
     <a class="relative block w-full h-48 overflow-hidden rounded justify-self-center">
-        <img alt="ecommerce" class="block object-cover object-center w-full h-full"
-            src={{ asset(Storage::url($book->image)) }}>
+        <img alt="Couverture de livre" class="block object-cover object-center w-full h-full"
+            src={{ asset('storage/' . $book->image) }}>
     </a>
     <div class="mt-4">
         <h2 class="max-w-full text-lg font-medium text-gray-900 truncate title-font">{{ $book->title }}</h2>

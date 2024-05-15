@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +17,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $now = now();
+
+
         DB::table('users')->insert([
             'lastname' => "abdmeziem",
             'firstname' => "areslane",
@@ -23,16 +27,13 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 2,
             'phoneNumber' => 23232,
+            "created_at" => $now, "updated_at" => $now,
         ]);
 
-        $start = strtotime('2024-01-01 00:00:00'); // Start timestamp (January 1, 2023, 00:00:00)
-        $end = strtotime('2024-12-31 23:59:59'); // End timestamp (December 31, 2023, 23:59:59)
-
-
+        User::factory()->count(60)->create();
 
         for ($i = 0; $i < 30; $i++) {
-            $randomTimestamp = mt_rand($start, $end);
-            $randomStamp = date('Y-m-d H:i:s', $randomTimestamp);
+
             DB::table('users')->insert([
                 'lastname' => 'lastname',
                 'firstname' => 'firstname',
@@ -40,7 +41,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'role' => 0,
                 'phoneNumber' => "0435435543",
-                "created_at" =>   $randomStamp,
+                "created_at" => $now, "updated_at" => $now,
             ]);
         }
     }

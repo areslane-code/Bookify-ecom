@@ -21,7 +21,6 @@ class Book extends Model
         "description",
     ];
 
-    public $timestamps = false;
 
     public function getImageUrlAttribute(): string
     {
@@ -46,5 +45,10 @@ class Book extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function state()
+    {
+        return    $this->quantity > 0 ? "Disponible" : "Non Disponible";
     }
 }

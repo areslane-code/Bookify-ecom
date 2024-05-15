@@ -120,7 +120,7 @@ class OrderController extends Controller
         $order["total_price"] = "100";
 
         // assiging the total_price
-        $order["status"] = 0;
+        $order["status_id"] = 1;
 
         // inserting the row in the orders table
         $order->save();

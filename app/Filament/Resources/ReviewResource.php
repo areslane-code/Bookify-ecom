@@ -44,6 +44,10 @@ class ReviewResource extends Resource
                     ->label("Titre")
                     ->required()
                     ->disabled(),
+                Forms\Components\TextInput::make('rating')
+                    ->label("Notation")
+                    ->required()
+                    ->disabled(),
                 Forms\Components\Textarea::make('content')
                     ->label("Contenu")
                     ->required()
@@ -60,6 +64,9 @@ class ReviewResource extends Resource
                 Tables\Columns\TextColumn::make('book.title')
                     ->label("Titre")
                     ->searchable(),
+                Tables\Columns\TextColumn::make('rating')
+                    ->label("Notation")
+                    ->limit(30),
                 Tables\Columns\TextColumn::make('content')
                     ->label("Contenu")
                     ->limit(30),

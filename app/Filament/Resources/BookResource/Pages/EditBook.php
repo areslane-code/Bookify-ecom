@@ -28,6 +28,17 @@ class EditBook extends EditRecord
             ->color('gray');
     }
 
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data["image"] = "public/" .  $data["image"];
+        return $data;
+    }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        $data["image"] = str_replace("public/", "", $data["image"]);
+        return $data;
+    }
 
     protected function getHeaderActions(): array
     {

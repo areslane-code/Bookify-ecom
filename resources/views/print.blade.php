@@ -64,7 +64,7 @@
         <h2>Bon de livraison</h2>
         <div class="invoice-details">
             <p><strong>Nom du Client :</strong> {{ $client }}</p>
-            <p><strong>Numéro de bon de commande :</strong> #{{ $record->id }}</p>
+            <p><strong>Numéro de bon de livraison :</strong> #{{ $record->id }}</p>
             <p><strong>Date de commande:</strong> {{ $record->created_at }}</p>
             <p><strong>Date de livraison :</strong> {{ date('d-m-Y') }}</p>
         </div>
@@ -91,10 +91,10 @@
         </table>
         <div class="invoice-total">
             @isset($record->coupon_id)
-                <p style="text-decoration:line-through"><strong>Prix Initial :</strong> {{ $initialprice }}</p>
+                <p style="text-decoration:line-through"><strong>Prix Initial :</strong> {{ $initialprice . ' ' . 'Da' }}</p>
                 <p><strong>Coupon Utilisé :</strong> {{ $record->coupon->code }}</p>
             @endisset
-            <p><strong>Prix Final :</strong> {{ $record->total_price }}</p>
+            <p><strong>Prix Final :</strong> {{ $record->total_price . ' ' . 'Da' }}</p>
         </div>
     </div>
 

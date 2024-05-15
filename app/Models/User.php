@@ -17,7 +17,6 @@ class User extends Authenticatable implements HasName, FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public $timestamps = false;
 
     public  function canAccessPanel(Panel $panel): bool
     {

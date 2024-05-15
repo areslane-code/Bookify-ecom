@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId("book_id")->constrained("books")->cascadeOnDelete();
             $table->integer("rating");
             $table->longText("content");
+            $table->timestamps();
         });
     }
 
