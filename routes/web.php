@@ -62,9 +62,18 @@ Route::get('/orders/create', [OrderController::class, "create"])->middleware("au
 
 Route::post('/order/store', [OrderController::class, "store"])->middleware("auth");
 
+Route::get('/order/edit/{id}', [OrderController::class, "edit"])->middleware("auth");
+
+Route::post('/order/update', [OrderController::class, "update"])->middleware("auth");
+
+Route::post('/order/cancel', [OrderController::class, "cancel"])->middleware("auth");
+
+
+
 Route::get('/orders/cart/delete-item/{id}', [OrderController::class, "deleteItemFromCart"])->middleware("auth");
 
 Route::post('/cart/add', [OrderController::class, "addToCart"])->middleware("auth");
+
 
 // coupon routing
 Route::post('/check-coupon', [CouponController::class, "check"])->middleware("auth");

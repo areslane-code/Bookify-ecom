@@ -10,7 +10,6 @@
                     <h1 class="text-xl font-bold text-gray-900 sm:text-3xl">Votre panier</h1>
                 </header>
                 <div class="mt-8">
-                    @csrf
                     <ul class="space-y-4">
                         @foreach ($books as $book)
                             <!-- Book-->

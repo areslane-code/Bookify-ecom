@@ -1,12 +1,13 @@
 @props(['review'])
 
 <div class="flex flex-col w-full p-6 mx-auto divide-y divide-gray-700 rounded-md shadow-2xl">
-    <div class="flex justify-between p-4">
+    <div class="flex items-center justify-between p-4">
         <div class="flex space-x-4">
             <div class="flex items-center gap-2">
                 <h4 class="font-bold">{{ $review->user->lastname }}</h4>
                 <h4 class="font-bold">{{ $review->user->firstname }}</h4>
             </div>
+            <span class="text-xs ">{{ date('d-m-Y', strtotime($review->created_at)) }}</span>
         </div>
         <div class="flex items-center space-x-2 text-yellow-400 ">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-5 h-5 fill-current">
@@ -17,6 +18,7 @@
             <span class="text-xl font-bold">{{ $review->rating }}</span>
         </div>
     </div>
+
     <div class="p-4 space-y-2 text-sm dark:text-gray-400">
         {{ $review->content }}
     </div>

@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
-    //
+    //SHOW METHODS
+
     public function index()
     {
         $orders = Order::with("user", "books", "coupon")->where("user_id", auth()->id())->get();
@@ -53,6 +54,8 @@ class OrderController extends Controller
         return back()->with("message", "Le livre est ajouté au panier.");
     }
 
+    // CREATE METHODS
+
     public function create(Request $request)
     {
 
@@ -82,6 +85,7 @@ class OrderController extends Controller
 
         $coupon = session("coupon");
         $finalPrice = null;
+
         $coupon_percentage = null;
 
         if (isset($coupon)) {
@@ -90,9 +94,13 @@ class OrderController extends Controller
             if ($finalPrice < 0) {
                 $finalPrice = 0;
             }
-
-            Session::put("finalPrice", $finalPrice);
         }
+
+        $finalPrice === null ?
+            Session::put("finalPrice", $totalPrice) :
+            Session::put("finalPrice", $finalPrice);
+
+
 
         return view("orders.create", compact("books", "totalPrice", "finalPrice", "coupon_percentage"));
     }
@@ -117,7 +125,7 @@ class OrderController extends Controller
         $order["adresse"] = $request->adresse;
 
         // assiging the total_price
-        $order["total_price"] = "100";
+        $order["total_price"] = Session::get("finalPrice");
 
         // assiging the total_price
         $order["status_id"] = 1;
@@ -152,6 +160,197 @@ class OrderController extends Controller
         return redirect("/orders")->with("message", "votre commande est faite.");
     }
 
+
+    // UPDATE METHODS
+
+    public function edit(Request $request, $id)
+    {
+        $order = Order::find($id);
+        $books = $order->books;
+
+        // calculate the sum of prices
+        $totalPrice = 0;
+        foreach ($books as $book) {
+            $totalPrice =
+                $totalPrice + $book->price * $book->pivot->quantity;
+        }
+
+        //
+        $coupon = $order->coupon;
+        $finalPrice = null;
+
+        $coupon_percentage = null;
+
+        if (isset($coupon)) {
+            $coupon_percentage = $coupon->percentage;
+            $finalPrice = $totalPrice - $totalPrice * $coupon->percentage / 100;
+            if ($finalPrice < 0) {
+                $finalPrice = 0;
+            }
+        }
+
+        $order_id = $id;
+        $adresse = $order->adresse;
+
+        return view("orders.edit", compact("books", "totalPrice", "finalPrice", "coupon_percentage", "adresse", "order"));
+    }
+
+    public function update(Request $request)
+
+    {
+        $removeSubmit = $request->removeSubmit;
+        $updateSubmit = $request->updateSubmit;
+        $order_id = $request->order_id;
+        $order = Order::find($order_id);
+
+
+        if (isset($removeSubmit)) {
+
+            $bookId = $removeSubmit; // Assuming you have a hidden input field for the book ID
+
+            // Find the book in the order's books relation
+            $book = $order->books()->wherePivot('book_id', $bookId)->first();
+
+            if ($book) {
+                // Get the quantity of the book in the pivot table
+                $pivotQuantity = $book->pivot->quantity;
+
+                // Update the book's quantity in the book table
+                $book->quantity += $pivotQuantity;
+                $book->save();
+
+                // Detach the book from the order (remove it from the pivot table)
+                $order->books()->detach($bookId);
+
+                if ($order->books()->count() === 0) {
+                    $order->delete(); // Delete the order if there are no books left
+
+                    return redirect("/orders");
+                }
+
+                // recalculate the price
+
+                // calculate the sum of prices
+                $books = $order->books;
+
+                $totalPrice = 0;
+
+                foreach ($books as $book) {
+                    $totalPrice =
+                        $totalPrice + $book->price * $book->pivot->quantity;
+                }
+
+
+                $coupon = $order->coupon;
+                $finalPrice = null;
+
+                if (isset($coupon)) {
+                    $finalPrice = $totalPrice - $totalPrice * $coupon->percentage / 100;
+                    if ($finalPrice < 0) {
+                        $finalPrice = 0;
+                    }
+                    $order->total_price = $finalPrice;
+                } else {
+                    $order->total_price = $totalPrice;
+                }
+
+                // save changes to the order object
+                $order->save();
+
+
+
+                // if there still are some books
+                return back();
+            }
+        } else  if (isset($updateSubmit)) {
+
+            // Iterate over the request input fields that match the quantityInput_* pattern
+            foreach ($request->all() as $key => $value) {
+                if (preg_match('/^quantityInput_(\d+)$/', $key, $matches)) {
+                    $bookId = $matches[1];
+                    $newQuantity = $value;
+
+                    // Find the book in the order's books relation
+                    $book = $order->books()->wherePivot('book_id', $bookId)->first();
+
+                    if ($book) {
+                        $book->quantity = $book->quantity + ($book->pivot->quantity - $newQuantity);
+                        $book->save();
+                        // Update the quantity of the book in the pivot table
+                        $book->pivot->quantity = $newQuantity;
+                        $book->pivot->save();
+                    }
+                }
+            }
+
+            $adresse = $request->adresse;
+
+            if (isset($adresse)) {
+                $order->adresse = $adresse;
+            }
+
+            // calculate the sum of prices
+            $books = $order->books;
+
+            $totalPrice = 0;
+
+            foreach ($books as $book) {
+                $totalPrice =
+                    $totalPrice + $book->price * $book->pivot->quantity;
+            }
+
+
+            $coupon = $order->coupon;
+            $finalPrice = null;
+
+            if (isset($coupon)) {
+                $finalPrice = $totalPrice - $totalPrice * $coupon->percentage / 100;
+                if ($finalPrice < 0) {
+                    $finalPrice = 0;
+                }
+                $order->total_price = $finalPrice;
+            } else {
+                $order->total_price = $totalPrice;
+            }
+
+            // save changes to the order object
+            $order->save();
+
+            return back();
+        }
+    }
+
+    // Cancel order
+
+    public function cancel(Request $request)
+    {
+        $id = $request->order_id;
+        $order = Order::find($id);
+        if (isset($order)) {
+            $books = $order->books;
+
+            foreach ($books as $book) {
+                if ($book) {
+                    // Get the quantity of the book in the pivot table
+                    $pivotQuantity = $book->pivot->quantity;
+
+                    // Update the book's quantity in the book table
+                    $book->quantity += $pivotQuantity;
+                    $book->save();
+
+                    // Detach the book from the order (remove it from the pivot table)
+                    $order->books()->detach($book->id);
+                }
+            }
+
+            $order->status_id = 7;
+            $order->save();
+        }
+
+        return redirect("/orders");
+    }
+
+    // DELETE METHODS
     public function deleteItemFromCart(Request $request, $id)
     {
 
