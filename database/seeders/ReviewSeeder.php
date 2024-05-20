@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Book;
+use App\Models\Review;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +34,16 @@ class ReviewSeeder extends Seeder
         foreach ($bookReviews as $review) {
             DB::table('reviews')->insert($review);
         }
-        //
+
+        $books = Book::all();
+
+        // Create 5 reviews for each book with random users
+        foreach ($books as $book) {
+            $book->reviews()->saveMany(
+                Review::factory(5)->make()->each(function ($review) {
+                    $review->user_id = User::inRandomOrder()->first()->id;
+                })
+            );
+        }
     }
 }

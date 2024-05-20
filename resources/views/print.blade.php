@@ -92,7 +92,7 @@
         <div class="invoice-total">
             @isset($record->coupon_id)
                 <p style="text-decoration:line-through"><strong>Prix Initial :</strong> {{ $initialprice . ' ' . 'Da' }}</p>
-                <p><strong>Coupon Utilisé :</strong> {{ $record->coupon->code }}</p>
+                <p style="font-size:12px;"><strong>Code de promo Utilisé :</strong> {{ $record->coupon->code }}</p>
             @endisset
             <p><strong>Prix Final :</strong> {{ $record->total_price . ' ' . 'Da' }}</p>
         </div>

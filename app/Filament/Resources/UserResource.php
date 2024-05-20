@@ -57,10 +57,12 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('phoneNumber')
                     ->tel()
                     ->telRegex('/0[0-9]{9}/')
+                    ->unique(ignoreRecord: true)
                     ->required()
                     ->label("Téléphone"),
                 Forms\Components\TextInput::make('email')
                     ->email()
+                    ->unique(ignoreRecord: true)
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
@@ -73,6 +75,7 @@ class UserResource extends Resource
                     ->hidden(fn ($record) => $record !== null && $record->role === 0)
             ]);
     }
+
 
 
 

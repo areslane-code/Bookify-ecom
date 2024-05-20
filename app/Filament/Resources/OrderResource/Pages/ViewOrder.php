@@ -32,7 +32,7 @@ class ViewOrder extends ViewRecord
     {
         $recordDate    = $record->created_at;
         $client     = $record->user->lastname . " " .  $record->user->firstname;
-        $fileName       = "bondecommande{$recordDate}_{$client}.pdf";
+        $fileName       = "bondelivraison{$recordDate}_{$client}.pdf";
         $initialprice = 0;
         foreach ($record->books as $book) {
             $initialprice = $initialprice + $book->price * $book->pivot->quantity;

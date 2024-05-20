@@ -50,6 +50,9 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('total_price')
                     ->searchable()
                     ->numeric()
+                    ->formatStateUsing(function ($state) {
+                        return $state . " " . "Da";
+                    })
                     ->label("Prix total"),
                 Tables\Columns\TextColumn::make('created_at')
                     ->date("d/m/Y")

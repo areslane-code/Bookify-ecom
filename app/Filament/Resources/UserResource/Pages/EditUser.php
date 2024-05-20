@@ -32,7 +32,7 @@ class EditUser extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make()->label("supprimer"),
+            Actions\DeleteAction::make()->label("supprimer")->hidden(fn ($record) => $record->role === 2),
         ];
     }
 }

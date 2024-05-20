@@ -96,7 +96,9 @@ class BookResource extends Resource
                     ->searchable()
                     ->label("Auteur"),
                 Tables\Columns\TextColumn::make('price')
-                    ->suffix(" " . "DA")
+                    ->formatStateUsing(function ($state) {
+                        return $state . " " . "Da";
+                    })
                     ->searchable()
                     ->sortable()
                     ->label("Prix"),

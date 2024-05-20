@@ -35,7 +35,7 @@ class OrderSeeder extends Seeder
             ['user_id' => 2, 'adresse' => '1111 Pinehurst Street',    'total_price' => '90.00',     "coupon_id" => 4, "status_id" => 1,    "created_at" => $now, "updated_at" => $now,]
         ];
 
-        Order::factory()->count(60)->create();
+        Order::factory()->count(213)->create();
 
         // foreach ($orders as $order) {
         //     DB::table('orders')->insert($order);
