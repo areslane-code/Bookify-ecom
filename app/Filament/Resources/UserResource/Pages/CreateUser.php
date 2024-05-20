@@ -24,13 +24,4 @@ class CreateUser extends CreateRecord
         $data["created_at"] = date("Y-m-d H:i:s");
         return $data;
     }
-
-    protected function afterValidate(): void
-    {
-        $record_email = $this->data['email'];
-        // Check if the email field contains a specific value
-        if (User::where("email", $record_email)->get()) {
-            $this->addError('email', 'Vous devez entrer une adresse qui n\'exist pas déja');
-        }
-    }
 }
