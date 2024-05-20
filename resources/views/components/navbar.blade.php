@@ -28,7 +28,7 @@
                     @endcan
 
                     <button x-on:click="open = ! open" type="button"
-                        class="flex items-center justify-center text-sm font-semibold text-white border rounded-lg hs-collapse-toggle size-9 gap-x-2 border-white/20 hover:border-white/40 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                        class="flex items-center justify-center text-sm font-semibold text-white border rounded-lg hs-collapse-toggle size-9 gap-x-2 border-white/20 hover:border-white/40 disabled:opacity-50 disabled:pointer-events-none "
                         data-hs-collapse="#navbar-collapse-with-animation"
                         aria-controls="navbar-collapse-with-animation" aria-label="Toggle navigation">
                         <svg class="flex-shrink-0 hs-collapse-open:hidden size-4" xmlns="http://www.w3.org/2000/svg"
@@ -67,6 +67,7 @@
                     @endcan
                     @can('isUser')
                         <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/orders">Commandes</a>
+                        <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/coupons">Promos</a>
                         <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/reviews">Avis</a>
                         <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/account">Compte</a>
                     @endcan
@@ -106,6 +107,7 @@
                     <a class="font-medium text-white sm:py-6" href="/" aria-current="page">Accueil</a>
                     @can('isUser')
                         <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/orders">Commandes</a>
+                        <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/coupons">Promos</a>
                         <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/reviews">Avis</a>
                         <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/account">Compte</a>
                     @endcan
@@ -141,7 +143,7 @@
     <div class="w-full px-4 pt-2 pb-4 bg-blue-600">
         <form action="/book" method="GET" class="flex rounded-lg shadow-sm 0 sm:w-1/2 sm:mx-auto">
             <button type="submit"
-                class="w-[2.875rem] h-[2.875rem] flex-shrink-0 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-s-md border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                class="w-[2.875rem] h-[2.875rem] flex-shrink-0 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-s-md border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none ">
                 <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -150,7 +152,7 @@
                 </svg>
             </button>
             <input type="text" id="search" placeholder="Rechercher un livre" name="search"
-                class="block w-full px-4 py-3 text-sm border-gray-200 shadow-sm lg:mx-auto rounded-e-lg focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+                class="block w-full px-4 py-3 text-sm border-gray-200 shadow-sm lg:mx-auto rounded-e-lg focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none ">
             <!-- End Select -->
 
         </form>

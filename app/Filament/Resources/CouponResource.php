@@ -40,6 +40,7 @@ class CouponResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('code')
                     ->required()
+                    ->minLength(1)
                     ->maxLength(20)
                     ->label("Code de promo"),
                 Forms\Components\TextInput::make('percentage')
@@ -61,12 +62,15 @@ class CouponResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('code')
-                    ->searchable(),
+                    ->searchable()
+                    ->label("Code"),
                 Tables\Columns\TextColumn::make('percentage')
+                    ->searchable()
                     ->numeric()
                     ->sortable()
                     ->label("Pourcentage"),
                 Tables\Columns\TextColumn::make('expires_at')
+                    ->searchable()
                     ->date("d/m/Y")
                     ->sortable()
                     ->label("Date d'expiration"),

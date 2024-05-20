@@ -45,9 +45,7 @@
                                     <input {{ $order->status_id !== 1 ? 'disabled' : '' }} type="number"
                                         name="quantityInput_{{ $book->id }}" value={{ $book->pivot->quantity }}
                                         id="quantityInput_{{ $book->id }}"
-                                        class="w-16 p-1 text-sm font-semibold text-center text-gray-500 font-bitter">
-
-                                    </input>
+                                        class="w-16 p-1 text-sm font-semibold text-center text-gray-500 font-bitter" />
 
                                     {{-- Remove book submit --}}
                                     <button {{ $order->status_id !== 1 ? 'hidden' : '' }} type="submit" name="removeSubmit"
@@ -117,7 +115,7 @@
                         @if ($order->status_id === 1)
                             <button type="submit"
                                 class="block px-5 py-3 mt-4 text-sm text-gray-100 transition bg-red-700 rounded hover:bg-red-900">
-                                Annuler la commande
+                                Supprimer la commande
                             </button>
                         @endif
                     </form>

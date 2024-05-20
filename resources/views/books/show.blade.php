@@ -33,8 +33,23 @@
                       <input type="hidden" name="book_id" value="{{ $book->id }}">
                       <div class="max-w-sm space-y-3">
                           <div class="relative">
+                              @php
+
+                                  $cart = Session::get('cart');
+                                  if (isset($cart)) {
+                                      $key = false;
+                                      foreach ($cart as $cartKey => $cartValue) {
+                                          if ($cartKey == $book->id) {
+                                              $key = true;
+                                              break;
+                                          }
+                                      }
+                                  }
+                                  $quantity = isset($cart) && isset($cart[$book->id]) ? $cart[$book->id] : 1;
+                              @endphp
+
                               {{-- book quantity input --}}
-                              <input type="number" value="1"
+                              <input type="number" value="{{ $quantity }}" min="1"
                                   class="block w-full px-4 py-3 text-sm text-gray-500 bg-gray-100 border-transparent rounded-lg font-bitter peer ps-11 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
                                   placeholder="Quantité" name="book_quantity">
                               <div
@@ -48,13 +63,35 @@
                               </div>
                           </div>
 
-                          <button type="submit"
-                              class="flex items-center justify-center w-full px-4 py-3 mt-6 font-semibold text-white bg-blue-600 border border-transparent rounded-lg text-md gap-x-4 hover:bg-blue-700 font-raleway">
-                              <div type="button" class="flex items-center justify-center gap-x-2">
-                                  Ajouter au<span class="material-symbols-outlined ">shopping_cart</span>
-                              </div>
-                              <span class="text-lg font-semibold font-bitter">{{ $book->price . ' ' . 'Da' }}</span>
-                          </button>
+                          @if (!isset($key) || $key === false)
+                              <button type="submit"
+                                  class="flex items-center justify-center w-full px-4 py-3 mt-6 font-semibold text-white bg-blue-600 border border-transparent rounded-lg text-md gap-x-4 hover:bg-blue-700 font-raleway">
+                                  <div type="button" class="flex items-center justify-center gap-x-2">
+                                      Ajouter au<span class="material-symbols-outlined ">shopping_cart</span>
+                                  </div>
+                                  <span class="text-lg font-semibold font-bitter">{{ $book->price . ' ' . 'Da' }}</span>
+                              </button>
+                          @else
+                              <button type="submit"
+                                  class="flex items-center justify-center w-full px-4 py-3 mt-6 font-semibold text-white bg-blue-600 border border-transparent rounded-lg text-md gap-x-4 hover:bg-blue-700 font-raleway">
+                                  <div type="button" class="flex items-center justify-center gap-x-2">
+                                      Modifier la quantité dans le panier<span
+                                          class="material-symbols-outlined ">shopping_cart</span>
+                                  </div>
+                              </button>
+                          @endif
+
+                          @if ($book->quantity <= 0)
+                              <p class="p-2 mt-2 text-xs text-blue-600 bg-blue-100 rounded text-start ">Bien que ce
+                                  livre
+                                  soit
+                                  actuellement
+                                  en rupture
+                                  de
+                                  stock, vous avez la possibilité de
+                                  l'ajouter à votre panier dès maintenant. Cependant, veuillez noter que les délais de
+                                  livraison risquent d'être plus longs que d'habitude.</p>
+                          @endif
 
                   </form>
               </div>

@@ -60,14 +60,18 @@ class ReviewResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.firstname')
+                    ->searchable()
                     ->label("Utilisateur"),
                 Tables\Columns\TextColumn::make('book.title')
+                    ->searchable()
                     ->label("Titre")
                     ->searchable(),
                 Tables\Columns\TextColumn::make('rating')
+                    ->searchable()
                     ->label("Notation")
                     ->limit(30),
                 Tables\Columns\TextColumn::make('content')
+                    ->searchable()
                     ->label("Contenu")
                     ->limit(30),
             ])
