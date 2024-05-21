@@ -59,9 +59,12 @@ class ReviewResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.firstname')
+                Tables\Columns\TextColumn::make('user.lastname')
                     ->searchable()
                     ->label("Utilisateur"),
+                Tables\Columns\TextColumn::make('user.firstname')
+                    ->searchable()
+                    ->label(""),
                 Tables\Columns\TextColumn::make('book.title')
                     ->searchable()
                     ->label("Titre")
@@ -89,8 +92,7 @@ class ReviewResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([]),
-            ])
-            ->paginated(false);
+            ]);
     }
 
     public static function getRelations(): array
