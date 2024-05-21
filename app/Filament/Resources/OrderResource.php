@@ -40,18 +40,24 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.lastname')
+                    ->searchable()
                     ->label("Nom"),
                 Tables\Columns\TextColumn::make('user.firstname')
+                    ->searchable()
                     ->label("Prénom"),
                 Tables\Columns\TextColumn::make('adresse')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('total_price')
+                    ->searchable()
+                    ->numeric()
                     ->label("Prix total"),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->date("d/m/Y")
+                    ->searchable()
                     ->sortable()
                     ->label("Date de commande"),
                 Tables\Columns\TextColumn::make("status.status")
+                    ->searchable()
                     ->badge()
                     ->color(function ($state) {
                         if ($state === "annulée" || $state === "retournée") {

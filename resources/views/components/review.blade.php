@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div class="p-4 space-y-2 text-sm dark:text-gray-400">
+    <div class="p-4 space-y-2 text-sm">
         {{ $review->content }}
     </div>
 </div>

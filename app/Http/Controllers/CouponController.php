@@ -12,6 +12,21 @@ class CouponController extends Controller
 {
     //
 
+    public function index(Request $request)
+    {
+        $coupons = Coupon::where('expires_at', '>=', now())
+            ->get();
+
+        foreach ($coupons as $coupon) {
+            $hasCouponBeenUsed = Order::where('user_id', auth()->id())
+                ->where('coupon_id', $coupon->id)
+                ->exists();
+            $coupon->used_before = $hasCouponBeenUsed;
+        }
+
+        return view('coupons.index', compact('coupons'));
+    }
+
     public function check(Request $request)
     {
 

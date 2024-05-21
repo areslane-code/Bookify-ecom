@@ -65,10 +65,12 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required()
-                    ->visibleOn("create")
-                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
-                    ->maxLength(255),
+                    ->formatStateUsing(fn (?string $state): string => isset($state) ? "" : '')
+                    ->dehydrated(fn ($state) => filled($state)) // Only hash if the state is not empty
+                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                    ->minLength(8)
+                    ->maxLength(255)
+                    ->hidden(fn ($record) => $record !== null && $record->role === 0)
             ]);
     }
 
@@ -86,6 +88,7 @@ class UserResource extends Resource
                     ->searchable()
                     ->label("Prénom"),
                 Tables\Columns\TextColumn::make('role')
+                    ->searchable()
                     ->label("Role")
                     ->formatStateUsing(function ($state) {
                         $roleNames = [
@@ -106,6 +109,7 @@ class UserResource extends Resource
                     })
                     ->label("Role"),
                 Tables\Columns\TextColumn::make('phoneNumber')
+                    ->searchable()
                     ->label("Téléphone"),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable()
@@ -115,7 +119,9 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->label("modifier")->hidden(fn ($record) => $record->role === 0),
+                Tables\Actions\EditAction::make()
+                    ->label("modifier")
+                    ->hidden(fn ($record) => $record->role === 0),
                 Tables\Actions\DeleteAction::make()->label(""),
 
             ])

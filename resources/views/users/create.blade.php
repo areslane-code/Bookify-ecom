@@ -5,8 +5,8 @@
         <div class="bg-white border border-gray-200 shadow-sm mt-7 rounded-xl">
             <div class="p-4 sm:p-7">
                 <div class="text-center">
-                    <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Créer un compte</h1>
-                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                    <h1 class="block text-2xl font-bold text-gray-800 ">Créer un compte</h1>
+                    <p class="mt-2 text-sm text-gray-600 ">
                         Vous avez déja un compte?
                         <a class="font-medium text-blue-600 decoration-2 hover:underline" href="/login">
                             se connecter
@@ -21,10 +21,10 @@
                         <div class="grid gap-y-4">
                             <!-- Last Name Form Group -->
                             <div>
-                                <label for="nom" class="block mb-2 text-sm dark:text-white">Nom</label>
+                                <label for="nom" class="block mb-2 text-sm ">Nom</label>
                                 <div class="relative">
                                     <input type="text" id="nom" name="nom"
-                                        class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                        class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
                                         required>
                                     <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                                         <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
@@ -43,10 +43,10 @@
 
                             <!-- First Name Form Group -->
                             <div>
-                                <label for="prenom" class="block mb-2 text-sm dark:text-white">Prenom</label>
+                                <label for="prenom" class="block mb-2 text-sm ">Prenom</label>
                                 <div class="relative">
                                     <input type="text" id="prenom" name="prenom"
-                                        class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                        class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
                                         required>
                                     <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                                         <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
@@ -66,11 +66,11 @@
 
                             <!-- Phone Number Form Group -->
                             <div>
-                                <label for="telephone" class="block mb-2 text-sm dark:text-white">Numéro de
+                                <label for="telephone" class="block mb-2 text-sm ">Numéro de
                                     téléphone</label>
                                 <div class="relative">
                                     <input type="tel" id="telephone" name="telephone"
-                                        class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                        class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
                                         required>
                                     <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                                         <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
@@ -90,10 +90,10 @@
 
                             <!-- Form Group -->
                             <div>
-                                <label for="email" class="block mb-2 text-sm dark:text-white">Email</label>
+                                <label for="email" class="block mb-2 text-sm ">Email</label>
                                 <div class="relative">
                                     <input type="email" id="email" name="email"
-                                        class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                        class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
                                         required>
                                     <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                                         <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"
@@ -112,11 +112,11 @@
                             <!-- Form Group -->
                             <div>
                                 <div class="flex items-center justify-between">
-                                    <label for="password" class="block mb-2 text-sm dark:text-white">Mot de passe</label>
+                                    <label for="password" class="block mb-2 text-sm ">Mot de passe</label>
                                 </div>
                                 <div class="relative">
                                     <input type="password" id="password" name="password"
-                                        class="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                        class="block w-full px-4 py-3 text-sm border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none "
                                         required aria-describedby="password-error">
                                     <div class="absolute inset-y-0 hidden pointer-events-none end-0 pe-3">
                                         <svg class="text-red-500 size-5" width="16" height="16" fill="currentColor"

@@ -43,7 +43,7 @@ class OrderController extends Controller
             } else {
                 $cart[$book_id] = $book_quantity;
                 Session::put("cart", $cart);
-                return back()->with("message", "Le livre est déja dans le panier, sa quantité est modifié.");
+                return back()->with("message", "Le quantité de livre est modifiée.");
             }
         }
 
@@ -257,8 +257,6 @@ class OrderController extends Controller
                 // save changes to the order object
                 $order->save();
 
-
-
                 // if there still are some books
                 return back();
             }
@@ -343,8 +341,7 @@ class OrderController extends Controller
                 }
             }
 
-            $order->status_id = 7;
-            $order->save();
+            $order->delete();
         }
 
         return redirect("/orders");
@@ -355,7 +352,6 @@ class OrderController extends Controller
     {
 
         $cart = Session::get("cart");
-
         if (array_key_exists($id, $cart)) {
             unset($cart[$id]);
             Session::put("cart", $cart);

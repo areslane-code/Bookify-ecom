@@ -51,20 +51,24 @@ class BookResource extends Resource
                     ]),
                 Forms\Components\TextInput::make('title')
                     ->required()
+                    ->minLength(0)
                     ->maxLength(255)
                     ->label("Titre"),
                 Forms\Components\TextInput::make('author')
                     ->required()
-                    ->regex('/^[a-zA-Z ]+$/')
+                    ->regex('/^[a-zA-Zé ]+$/')
+                    ->minLength(0)
                     ->maxLength(255)
                     ->label("Auteur"),
                 Forms\Components\TextInput::make('price')
                     ->required()
                     ->numeric()
-                    ->prefix('DA')
+                    ->minValue(0)
+                    ->suffix('DA')
                     ->label("Prix"),
                 Forms\Components\TextInput::make('quantity')
                     ->required()
+                    ->minValue(0)
                     ->numeric()
                     ->label("Quantité"),
                 Forms\Components\Select::make('categories')
@@ -93,13 +97,15 @@ class BookResource extends Resource
                     ->label("Auteur"),
                 Tables\Columns\TextColumn::make('price')
                     ->suffix(" " . "DA")
+                    ->searchable()
                     ->sortable()
                     ->label("Prix"),
                 Tables\Columns\TextColumn::make('quantity')
+                    ->searchable()
                     ->numeric()
                     ->sortable()
-                    ->label("Quantité")
                     ->badge()
+                    ->label("Quantité")
                     ->color(function ($state, $record): string {
                         return $record->quantity > 0 ? "green" : "danger";
                     }),

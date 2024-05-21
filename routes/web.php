@@ -68,13 +68,12 @@ Route::post('/order/update', [OrderController::class, "update"])->middleware("au
 
 Route::post('/order/cancel', [OrderController::class, "cancel"])->middleware("auth");
 
-
-
 Route::get('/orders/cart/delete-item/{id}', [OrderController::class, "deleteItemFromCart"])->middleware("auth");
 
 Route::post('/cart/add', [OrderController::class, "addToCart"])->middleware("auth");
 
 
 // coupon routing
+Route::get('/coupons', [CouponController::class, "index"])->middleware("auth");
 Route::post('/check-coupon', [CouponController::class, "check"])->middleware("auth");
 Route::delete('/cancel-coupon', [CouponController::class, "cancel"])->middleware("auth");
