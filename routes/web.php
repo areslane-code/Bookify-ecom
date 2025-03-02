@@ -68,9 +68,16 @@ Route::post('/order/update', [OrderController::class, "update"])->middleware("au
 
 Route::post('/order/cancel', [OrderController::class, "cancel"])->middleware("auth");
 
+Route::post('/order/pay', [OrderController::class, "test"])->middleware("auth");
+
+Route::get('/order/payment-success', [OrderController::class, "paymentSuccess"])->middleware("auth");
+
+
 Route::get('/orders/cart/delete-item/{id}', [OrderController::class, "deleteItemFromCart"])->middleware("auth");
 
 Route::post('/cart/add', [OrderController::class, "addToCart"])->middleware("auth");
+
+Route::post('/order/print-invoice', [OrderController::class, "printInvoice"])->middleware("auth");
 
 
 // coupon routing

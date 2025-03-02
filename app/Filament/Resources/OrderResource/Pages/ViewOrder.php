@@ -19,12 +19,12 @@ class ViewOrder extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\Action::make("imprimer bon de livraison")
-                ->action(fn (Order $record) => ViewOrder::printrecord($record))
-                ->visible(function ($record) {
-                    // visible only when the order is confirmed.
-                    return $record->status_id === 2 || $record->status_id === 3 || $record->status_id === 4 || $record->status_id === 5;
-                })
+            Actions\Action::make("imprimer la facture")
+                ->action(fn(Order $record) => ViewOrder::printrecord($record))
+            // ->visible(function ($record) {
+            //      visible only when the order is confirmed.
+            //     return $record->status_id === 2 || $record->status_id === 3 || $record->status_id === 4 || $record->status_id === 5;
+            // })
         ];
     }
 
@@ -32,13 +32,13 @@ class ViewOrder extends ViewRecord
     {
         $recordDate    = $record->created_at;
         $client     = $record->user->lastname . " " .  $record->user->firstname;
-        $fileName       = "bondelivraison{$recordDate}_{$client}.pdf";
+        $fileName       = "facture{$recordDate}_{$client}.pdf";
         $initialprice = 0;
         foreach ($record->books as $book) {
             $initialprice = $initialprice + $book->price * $book->pivot->quantity;
         }
         $pdf            = Pdf::loadView('print', compact('record', 'fileName', "client", "initialprice"));
 
-        return response()->streamDownload(fn () => print($pdf->output()), $fileName);
+        return response()->streamDownload(fn() => print($pdf->output()), $fileName);
     }
 }

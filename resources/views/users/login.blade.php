@@ -5,13 +5,8 @@
           <div class="bg-white border border-gray-200 shadow-sm mt-7 rounded-xl">
               <div class="p-4 sm:p-7">
                   <div class="text-center">
-<<<<<<< HEAD
-                      <h1 class="block text-2xl font-bold text-gray-800">Se connecter</h1>
-                      <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
-=======
                       <h1 class="block text-2xl font-bold text-gray-800 ">Se connecter</h1>
                       <p class="mt-2 text-sm text-gray-600 ">
->>>>>>> 2fbf9975b0767b6626d5ee7121ba9dc9a1b499c8
                           Vous n'avez pas un compte?
                           <a class="font-medium text-blue-600 decoration-2 hover:underline" href="/signup">
                               créer le ici

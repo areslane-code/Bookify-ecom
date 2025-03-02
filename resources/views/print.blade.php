@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bon de livraison</title>
+    <title>Facture</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -61,12 +61,12 @@
 
     <div class="invoice">
         <div class="company-logo">BOOKIFY</div>
-        <h2>Bon de livraison</h2>
+        <h2>Facture</h2>
         <div class="invoice-details">
             <p><strong>Nom du Client :</strong> {{ $client }}</p>
-            <p><strong>Numéro de bon de livraison :</strong> #{{ $record->id }}</p>
+            <p><strong>Numéro de Facture :</strong> #{{ $record->id }}</p>
             <p><strong>Date de commande:</strong> {{ $record->created_at }}</p>
-            <p><strong>Date de livraison :</strong> {{ date('d-m-Y') }}</p>
+            <p><strong>Date de facture :</strong> {{ date('d-m-Y') }}</p>
         </div>
         <table class="invoice-items">
             <thead>

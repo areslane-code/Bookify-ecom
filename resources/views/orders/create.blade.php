@@ -52,7 +52,7 @@
                         @endforeach
                     </ul>
 
-                    <form action="/order/store" method="POST" class="mt-4">
+                    <form action="/order/pay" method="POST" class="mt-4">
                         @csrf
                         {{-- Adresse input --}}
                         <div class="mt-8">
@@ -87,7 +87,13 @@
                                 <div class="flex justify-end">
                                     <button type="submit"
                                         class="block px-5 py-3 mt-4 text-sm text-gray-100 transition bg-blue-700 rounded hover:bg-gray-600">
-                                        Commander
+                                        Commander : payment a la livraison
+                                    </button>
+                                </div>
+                                <div class="flex justify-end">
+                                    <button type="submit"
+                                        class="block px-5 py-3 mt-4 text-sm text-gray-100 transition bg-blue-700 rounded hover:bg-gray-600">
+                                        Commander : Payement avec stripe
                                     </button>
                                 </div>
                             </div>

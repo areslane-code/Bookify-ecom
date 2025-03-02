@@ -7,10 +7,13 @@ use App\Models\BookOrder;
 use App\Models\Coupon;
 use App\Models\CouponUser;
 use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-
+use Stripe\Exception\ApiErrorException;
+use Stripe\Stripe;
 
 class OrderController extends Controller
 {
@@ -358,5 +361,156 @@ class OrderController extends Controller
         }
         // return to the previous page
         return back();
+    }
+
+
+
+    public function test(Request $request)
+    {
+        // Store form data in session
+        $request->flash(); // Keep old input for form repopulation if needed
+        session(['adresse' => $request->input('adresse')]); // Store adresse explicitly
+        $cart = Session::get("cart");
+        session(['cart' => $cart]); // Ensure cart is stored in session
+
+        try {
+            Stripe::setApiKey(config('stripe.test.sk') ?? env('STRIPE_TEST_SK'));
+
+            $lineItems = [];
+            foreach ($cart as $book_id => $order_quantity) {
+                $book = Book::find($book_id);
+
+                $lineItems[] = [
+                    'price_data' => [
+                        'currency' => 'DZD',
+                        'product_data' => [
+                            'name' => $book->title,
+                        ],
+                        'unit_amount' => $book->price * 100,
+                    ],
+                    'quantity' => $order_quantity,
+                ];
+            }
+
+            $session = \Stripe\Checkout\Session::create([
+                'line_items' => $lineItems,
+                'mode' => 'payment',
+                'success_url' => url('/order/payment-success'), // Redirect to store() after success
+                'cancel_url' => url('/orders/create'),
+            ]);
+
+            return redirect()->away($session->url);
+        } catch (ApiErrorException $e) {
+            return back()->with('error', 'Payment failed: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            return back()->with('error', 'An error occurred. Please try again.');
+        }
+    }
+
+    // public function live()
+    // {
+    //     Stripe::setApiKey(config('stripe.live.sk'));
+
+    //     $session = Session::create([
+    //         'line_items'  => [
+    //             [
+    //                 'price_data' => [
+    //                     'currency'     => 'gbp',
+    //                     'product_data' => [
+    //                         'name' => 'T-shirt',
+    //                     ],
+    //                     'unit_amount'  => 500,
+    //                 ],
+    //                 'quantity'   => 1,
+    //             ],
+    //         ],
+    //         'mode'        => 'payment',
+    //         'success_url' => route('success'),
+    //         'cancel_url'  => route('checkout'),
+    //     ]);
+
+    //     return redirect()->away($session->url);
+    // }
+
+
+    public function paymentSuccess(Request $request)
+    {
+
+        $order = new Order();
+        $order->user_id = auth()->id();
+
+        // Retrieve coupon from session
+        if (Session::has("coupon")) {
+            $order->coupon_id = Session::get("coupon")->id;
+        } else {
+            $order->coupon_id = null;
+        }
+
+        // Retrieve adresse from session
+        $order->adresse = session('adresse');
+
+        // Retrieve cart from session
+        $cart = session('cart');
+        if (!$cart) {
+            return redirect('/orders')->with('error', 'Cart is empty or session expired.');
+        }
+
+        // Calculate total price
+        $books = Book::whereIn('id', array_keys($cart))->get();
+        $totalPrice = 0;
+        foreach ($books as $book) {
+            $totalPrice += $book->price * $cart[$book->id];
+        }
+
+        $coupon = session("coupon");
+        $finalPrice = $totalPrice;
+        if ($coupon) {
+            $finalPrice = $totalPrice - ($totalPrice * $coupon->percentage / 100);
+            if ($finalPrice < 0) {
+                $finalPrice = 0;
+            }
+        }
+
+        $order->total_price = $finalPrice;
+        $order->status_id = 1;
+
+        // Save the order
+        $order->save();
+
+        // Create BookOrder entries
+        foreach ($cart as $book_id => $order_quantity) {
+            BookOrder::create([
+                "book_id" => $book_id,
+                "order_id" => $order->id,
+                "quantity" => $order_quantity,
+            ]);
+
+            // Update book quantity
+            $book = Book::find($book_id);
+            $book->quantity -= $order_quantity;
+            $book->save();
+        }
+
+        // Clear session data
+        Session::forget(['cart', 'coupon', 'adresse', 'finalPrice']);
+
+        return redirect("/orders")->with("message", "Votre commande est faite.");
+    }
+
+
+    public function printInvoice(Request $request)
+    {
+        $order_id = $request->order_id;
+        $record = Order::find($order_id);
+        $recordDate    = $record->created_at;
+        $client     = $record->user->lastname . " " .  $record->user->firstname;
+        $fileName       = "facture{$recordDate}_{$client}.pdf";
+        $initialprice = 0;
+        foreach ($record->books as $book) {
+            $initialprice = $initialprice + $book->price * $book->pivot->quantity;
+        }
+        $pdf            = Pdf::loadView('print', compact('record', 'fileName', "client", "initialprice"));
+
+        return response()->streamDownload(fn() => print($pdf->output()), $fileName);
     }
 }
