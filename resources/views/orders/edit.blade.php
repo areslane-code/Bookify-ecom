@@ -16,6 +16,19 @@
                         </p>
                     @endif
                 </header>
+                <!-- Print invoice-->
+                <div class="flex justify-end ">
+                    <form action="/order/print-invoice" method="POST">
+                        @csrf
+                        <input hidden type="text" name="order_id" value="{{ $order->id }}" id="hiddenId3">
+                        @if ($order->status_id === 1)
+                            <button type="submit"
+                                class="block px-5 py-3 mt-4 text-sm text-gray-100 transition bg-blue-700 rounded hover:bg-red-900">
+                                imprimer la facture
+                            </button>
+                        @endif
+                    </form>
+                </div>
                 <form action="/order/update" method="POST" class="mt-4">
                     @csrf
                     <input hidden type="text" name="order_id" value="{{ $order->id }}" id="hiddenId">
@@ -48,8 +61,9 @@
                                         class="w-16 p-1 text-sm font-semibold text-center text-gray-500 font-bitter" />
 
                                     {{-- Remove book submit --}}
-                                    <button {{ $order->status_id !== 1 ? 'hidden' : '' }} type="submit" name="removeSubmit"
-                                        value="{{ $book->id }}" class="text-gray-600 transition hover:text-red-600">
+                                    <button {{ $order->status_id !== 1 ? 'hidden' : '' }} type="submit"
+                                        name="removeSubmit" value="{{ $book->id }}"
+                                        class="text-gray-600 transition hover:text-red-600">
                                         <span class="sr-only">Remove item</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                             stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -120,6 +134,7 @@
                         @endif
                     </form>
                 </div>
+
         </div>
         @endif
     </div>
