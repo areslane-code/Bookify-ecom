@@ -84,16 +84,16 @@
                                     @endif
                                 </dl>
 
-                                <div class="flex justify-end">
+                                {{-- <div class="flex justify-end">
                                     <button type="submit"
                                         class="block px-5 py-3 mt-4 text-sm text-gray-100 transition bg-blue-700 rounded hover:bg-gray-600">
                                         Commander : payment a la livraison
                                     </button>
-                                </div>
+                                </div> --}}
                                 <div class="flex justify-end">
                                     <button type="submit"
                                         class="block px-5 py-3 mt-4 text-sm text-gray-100 transition bg-blue-700 rounded hover:bg-gray-600">
-                                        Commander : Payement avec stripe
+                                        Commander
                                     </button>
                                 </div>
                             </div>

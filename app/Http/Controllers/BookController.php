@@ -12,7 +12,7 @@ class BookController extends Controller
 
     public function index()
     {
-        $books = Book::all();
+        $books = Book::where("type", 'sale')->inRandomOrder()->get();
         return view('home', compact('books'));
     }
 

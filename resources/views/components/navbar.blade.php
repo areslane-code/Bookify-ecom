@@ -55,6 +55,8 @@
                     class="flex flex-col mt-5 gap-y-4 gap-x-0 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7">
                     <a class="font-medium text-white sm:py-6" href="/" aria-current="page">Accueil</a>
 
+                    <a class="font-medium text-white sm:py-6" href="/auctions" aria-current="page">Enchéres</a>
+
                     @can('isUser')
                         <div class="relative">
                             <a href="/orders/create"
@@ -105,6 +107,8 @@
                 <div
                     class="flex flex-col mt-5 gap-y-4 gap-x-0 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7">
                     <a class="font-medium text-white sm:py-6" href="/" aria-current="page">Accueil</a>
+                    <a class="font-medium text-white sm:py-6" href="/auctions" aria-current="page">Enchéres</a>
+
                     @can('isUser')
                         <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/orders">Commandes</a>
                         <a class="font-medium text-white/[.8] hover:text-white sm:py-6" href="/coupons">Promos</a>

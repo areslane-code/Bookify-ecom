@@ -13,13 +13,7 @@ class OrderStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        DB::table('order_statuses')->insert([
-            "status" => "en attente de confirmation"
-        ]);
-        DB::table('order_statuses')->insert([
-            "status" => "confirmée"
-        ]);
+
         DB::table('order_statuses')->insert([
             "status" => "en cours de préparation"
         ]);
@@ -31,9 +25,6 @@ class OrderStatusSeeder extends Seeder
         ]);
         DB::table('order_statuses')->insert([
             "status" => "retournée"
-        ]);
-        DB::table('order_statuses')->insert([
-            "status" => "annulée"
         ]);
     }
 }

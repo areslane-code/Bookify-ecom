@@ -19,42 +19,30 @@ class ListOrders extends ListRecords
             "tout" => Tab::make("")
                 ->label("Toutes les commandes"),
 
-            "nouvelles commandes" => Tab::make()->query(function (Builder $query) {
-                $query->where("status_id", 1);
-            })
-                ->label("Nouvelles"),
 
-            "confirmée" => Tab::make("")->query(function (Builder $query) {
-                $query->where("status_id", 2);
-            })
-                ->label("Confirmées"),
 
             "en cours de préparation" => Tab::make()->query(
                 function (Builder $query) {
-                    $query->where("status_id", 3);
+                    $query->where("status_id", 1);
                 }
             )
                 ->label("En cours de préparation"),
 
             "en cours de livraison" => Tab::make()->query(function (Builder $query) {
-                $query->where("status_id", 4);
+                $query->where("status_id", 2);
             })
                 ->label("En cours de livraison"),
 
             "livrée" => Tab::make()->query(function (Builder $query) {
-                $query->where("status_id", 5);
+                $query->where("status_id", 3);
             })
                 ->label("Livrées"),
 
             "retournée" => Tab::make()->query(function (Builder $query) {
-                $query->where("status_id", 6);
+                $query->where("status_id", 4);
             })
                 ->label("Retournées"),
 
-            "annulée" => Tab::make()->query(function (Builder $query) {
-                $query->where("status_id", 7);
-            })
-                ->label("Annulées"),
         ];
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -84,3 +84,17 @@ Route::post('/order/print-invoice', [OrderController::class, "printInvoice"])->m
 Route::get('/coupons', [CouponController::class, "index"])->middleware("auth");
 Route::post('/check-coupon', [CouponController::class, "check"])->middleware("auth");
 Route::delete('/cancel-coupon', [CouponController::class, "cancel"])->middleware("auth");
+
+
+// auction routing
+Route::get('/auctions', [AuctionController::class, "index"]);
+
+Route::get('/auction/{id}/show', [AuctionController::class, "show"]);
+
+Route::get('/auction/{id}/payment-form', [AuctionController::class, "paymentForm"])->middleware("auth");
+
+Route::post('/auction/new-bid', [AuctionController::class, "create"])->middleware("auth");
+
+Route::post('/auction/pay', [AuctionController::class, "test"])->middleware("auth");
+
+Route::get('/auction/payment-success', [AuctionController::class, "paymentSuccess"])->middleware("auth");

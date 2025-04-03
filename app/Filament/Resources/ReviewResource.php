@@ -21,7 +21,7 @@ class ReviewResource extends Resource
 
     protected static ?string $modelLabel = "Avis";
 
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 7;
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-oval-left-ellipsis';
 

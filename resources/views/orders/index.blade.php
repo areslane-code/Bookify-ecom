@@ -4,7 +4,29 @@
     <div class="my-8">
         <!-- Table Section -->
         <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8  mx-auto">
-            <!-- Card -->
+            <!-- non payed auction -->
+            @if (!blank($user_auctions))
+                <div>
+                    <h3 class="mb-4 text-2xl font-bold text-start ">Enchéres non payées</h3>
+                    <div class="flex flex-wrap items-center justify-start w-full gap-8 mb-8 xl:gap-10">
+                        @foreach ($user_auctions as $auction)
+                            <div id={{ $auction->id }} class="transition duration-300 w-28 hover:scale-110">
+                                <a href="/auction/{{ $auction->id }}/payment-form"
+                                    class="relative block w-full h-40 overflow-hidden rounded justify-self-center">
+                                    <img alt="Couverture de livre" class="block object-cover object-center w-full h-full"
+                                        src={{ asset('storage/' . $auction->book->image) }}>
+                                </a>
+                                <div class="mt-4">
+                                    <h2 class="max-w-full font-medium text-gray-900 truncate text-md title-font">
+                                        {{ $auction->book->title }}</h2>
+                                    <h3 class="my-2 font-bold tracking-widest text-md font-bitter">
+                                        {{ $auction->winning_price . ' ' . 'DA' }}</h3>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
             <!-- End Header -->
             @if (!blank($orders))
                 <div class="flex flex-col">
