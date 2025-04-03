@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Auction;
 use App\Models\Book;
 use App\Models\BookOrder;
 use App\Models\Coupon;
@@ -21,8 +22,15 @@ class OrderController extends Controller
 
     public function index()
     {
+        // select orders that belong to the user
         $orders = Order::with("user", "books", "coupon")->where("user_id", auth()->id())->get();
-        return view("orders.index", compact("orders"));
+        // select auctions that the user won and status is completed
+        $user_auctions = Auction::where(["winner_id" => auth()->id(), "status" => 'completed'], auth()->id())->get();
+
+
+
+
+        return view("orders.index", compact("orders", "user_auctions"));
     }
 
     public function addToCart(Request $request)
@@ -373,6 +381,11 @@ class OrderController extends Controller
         $cart = Session::get("cart");
         session(['cart' => $cart]); // Ensure cart is stored in session
 
+        // Retrieve coupon from session
+
+        $coupon = Session::get("coupon");
+
+
         try {
             Stripe::setApiKey(config('stripe.test.sk') ?? env('STRIPE_TEST_SK'));
 
@@ -386,7 +399,9 @@ class OrderController extends Controller
                         'product_data' => [
                             'name' => $book->title,
                         ],
-                        'unit_amount' => $book->price * 100,
+                        'unit_amount' => ($coupon != null) ?
+                            ($book->price - $book->price * $coupon->percentage / 100) * 100
+                            : $book->price * 100,
                     ],
                     'quantity' => $order_quantity,
                 ];
@@ -395,7 +410,7 @@ class OrderController extends Controller
             $session = \Stripe\Checkout\Session::create([
                 'line_items' => $lineItems,
                 'mode' => 'payment',
-                'success_url' => url('/order/payment-success'), // Redirect to store() after success
+                'success_url' => url('/order/payment-success'),
                 'cancel_url' => url('/orders/create'),
             ]);
 
@@ -407,30 +422,7 @@ class OrderController extends Controller
         }
     }
 
-    // public function live()
-    // {
-    //     Stripe::setApiKey(config('stripe.live.sk'));
 
-    //     $session = Session::create([
-    //         'line_items'  => [
-    //             [
-    //                 'price_data' => [
-    //                     'currency'     => 'gbp',
-    //                     'product_data' => [
-    //                         'name' => 'T-shirt',
-    //                     ],
-    //                     'unit_amount'  => 500,
-    //                 ],
-    //                 'quantity'   => 1,
-    //             ],
-    //         ],
-    //         'mode'        => 'payment',
-    //         'success_url' => route('success'),
-    //         'cancel_url'  => route('checkout'),
-    //     ]);
-
-    //     return redirect()->away($session->url);
-    // }
 
 
     public function paymentSuccess(Request $request)

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string("image");
             $table->string("title");
+            $table->enum('type', ['sale', 'auction'])->default('sale');
             $table->string("author");
-            $table->float("price");
-            $table->integer("quantity");
+            $table->float("price")->default(0);
+            $table->integer("quantity")->default(1);
             $table->longText("description");
             $table->timestamps();
         });

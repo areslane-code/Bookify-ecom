@@ -7,26 +7,26 @@
         <div class="max-w-3xl mx-auto">
             @if (isset($books) && !blank($books))
                 <header class="text-center">
-                    <h1 class="mb-2 text-xl font-bold text-gray-900 sm:text-3xl">Modifier votre commande</h1>
-                    @if ($order->status_id !== 1)
+                    <h1 class="mb-2 text-xl font-bold text-gray-900 sm:text-3xl">Details de votre commande</h1>
+                    {{-- @if ($order->status_id !== 1)
                         <p class="p-2 mb-6 text-red-600 bg-red-100 rounded-md">Il n'est possible de modifier ni annuler une
                             commande que si
                             elle n'a
                             pas encore été confirmée.
                         </p>
-                    @endif
+                    @endif --}}
                 </header>
                 <!-- Print invoice-->
                 <div class="flex justify-end ">
                     <form action="/order/print-invoice" method="POST">
                         @csrf
                         <input hidden type="text" name="order_id" value="{{ $order->id }}" id="hiddenId3">
-                        @if ($order->status_id === 1)
-                            <button type="submit"
-                                class="block px-5 py-3 mt-4 text-sm text-gray-100 transition bg-blue-700 rounded hover:bg-red-900">
-                                imprimer la facture
-                            </button>
-                        @endif
+
+                        <button type="submit"
+                            class="block px-5 py-3 mt-4 text-sm text-gray-100 transition bg-blue-700 rounded hover:bg-red-900">
+                            imprimer la facture
+                        </button>
+
                     </form>
                 </div>
                 <form action="/order/update" method="POST" class="mt-4">
@@ -61,7 +61,7 @@
                                         class="w-16 p-1 text-sm font-semibold text-center text-gray-500 font-bitter" />
 
                                     {{-- Remove book submit --}}
-                                    <button {{ $order->status_id !== 1 ? 'hidden' : '' }} type="submit"
+                                    {{-- <button {{ $order->status_id !== 1 ? 'hidden' : '' }} type="submit"
                                         name="removeSubmit" value="{{ $book->id }}"
                                         class="text-gray-600 transition hover:text-red-600">
                                         <span class="sr-only">Remove item</span>
@@ -70,7 +70,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                         </svg>
-                                    </button>
+                                    </button> --}}
 
                                 </div>
                             </li>
@@ -108,21 +108,20 @@
                                     </div>
                                 @endif
                             </dl>
-
                             <div class="flex justify-end">
                                 @if ($order->status_id === 1)
-                                    {{-- Update order submit --}}
                                     <button {{ $order->status_id !== 1 ? 'hidden' : '' }} type="submit"
                                         name="updateSubmit" value="updateSubmit"
                                         class="block px-5 py-3 mt-4 text-sm text-gray-100 transition bg-blue-700 rounded hover:bg-gray-600">
-                                        Modifier la commande
+                                        Modifier l'adresse de la commande
                                     </button>
                                 @endif
                             </div>
+
                         </div>
                     </div>
                 </form>
-                <div class="flex justify-end ">
+                {{-- <div class="flex justify-end ">
                     <form action="/order/cancel" method="POST">
                         @csrf
                         <input hidden type="text" name="order_id" value="{{ $order->id }}" id="hiddenId2">
@@ -133,8 +132,7 @@
                             </button>
                         @endif
                     </form>
-                </div>
-
+                </div> --}}
         </div>
         @endif
     </div>

@@ -82,6 +82,14 @@ class BookResource extends Resource
                     ->required()
                     ->columnSpanFull()
                     ->label("Description"),
+                Forms\Components\Select::make('type')
+                    ->options([
+                        'sale' => 'Vente',
+                        'auction' => 'Enchère',
+                    ])
+                    ->required()
+                    ->columnSpanFull()
+                    ->label("Type de vente"),
             ]);
     }
 

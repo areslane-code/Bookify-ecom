@@ -26,7 +26,7 @@ class OrderFactory extends Factory
             'coupon_id' => $this->faker->optional($weight = 0.50)->numberBetween(1, 7),
             'adresse' => $this->faker->address,
             'total_price' => 0,
-            'status_id' => $this->faker->numberBetween(1, 7),
+            'status_id' => $this->faker->numberBetween(1, 4),
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];

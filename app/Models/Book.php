@@ -37,6 +37,11 @@ class Book extends Model
         return $this->belongsToMany(Order::class);
     }
 
+    public function auctions()
+    {
+        return $this->belongsToMany(Auction::class);
+    }
+
     public function reviews()
     {
         return $this->hasMany(Review::class);
