@@ -1,6 +1,23 @@
 @extends('layout')
 
 @section('main')
+    <!-- Announcements section -->
+
+    <div id="announcements-container" class="mt-6">
+
+        <div id="announcement-display" class="mb-4">
+            <div class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto">
+                <div
+                    class="bg-blue-600 bg-[url('https://preline.co/assets/svg/examples/abstract-1.svg')] bg-no-repeat bg-cover bg-center p-4 rounded-lg text-center">
+                    <div class="">
+                        <h2 class="mb-4 text-2xl font-bold text-white">Nouvelles Annonces</h2>
+                        <p id="announcement-title" class="inline-block mt-2 text-xl font-semibold text-white"></p>
+                        <p id="announcement-content" class="inline-block mt-2 text-white"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Hero -->
     <div
         class="relative overflow-hidden before:absolute before:top-0 before:start-1/2 before:bg-[url('https://preline.co/assets/svg/examples/squared-bg-element.svg')] before:bg-no-repeat before:bg-top before:size-full before:-z-[1] before:transform before:-translate-x-1/2 ">
@@ -39,6 +56,9 @@
             @endguest
         </div>
     </div>
+
+
+
     <!-- End Hero -->
 
     <!--Books section-->
@@ -51,4 +71,57 @@
             @endforeach
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const announcementTitle = document.getElementById('announcement-title');
+            const announcementContent = document.getElementById('announcement-content');
+
+            // Fetch announcements from the Laravel API
+            fetch('http://localhost:8080/api/announcements')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Get the three most recent announcements (sorted by `created_at` descending)
+                    const recentAnnouncements = data
+                        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) // Sort by date
+                        .slice(0, 3); // Take the first 3
+
+                    if (recentAnnouncements.length === 0) {
+                        announcementTitle.textContent = 'No announcements available.';
+                        announcementContent.textContent = '';
+                        return;
+                    }
+
+                    // Function to display announcements in a loop
+                    let currentIndex = 0;
+
+                    function displayNextAnnouncement() {
+                        const currentAnnouncement = recentAnnouncements[currentIndex];
+
+                        // Update the DOM with the current announcement
+                        announcementTitle.textContent = currentAnnouncement.title;
+                        announcementContent.textContent = currentAnnouncement.content;
+
+                        // Move to the next announcement (loop back to the start if necessary)
+                        currentIndex = (currentIndex + 1) % recentAnnouncements.length;
+                    }
+
+                    // Display the first announcement immediately
+                    displayNextAnnouncement();
+
+                    // Change announcements every 5 seconds (5000 milliseconds)
+                    setInterval(displayNextAnnouncement, 5000);
+                })
+                .catch(error => {
+                    console.error('There was a problem fetching the announcements:', error);
+                    announcementTitle.textContent = 'Failed to load announcements.';
+                    announcementContent.textContent = 'Please try again later.';
+                });
+        });
+    </script>
 @endsection
